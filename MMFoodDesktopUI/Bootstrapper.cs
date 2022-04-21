@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MMFoodDesktopUI.Models;
 using MMFoodDesktopUI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MMFoodDesktopUI
 {
@@ -22,6 +24,11 @@ namespace MMFoodDesktopUI
         public Bootstrapper()
         {
             Initialize();
+
+            ConventionManager.AddElementConvention<PasswordBox>(
+            PasswordBoxHelper.BoundPasswordProperty,
+            "Password",
+            "PasswordChanged");
         }
 
         /// <summary>
