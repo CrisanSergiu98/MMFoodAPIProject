@@ -1,13 +1,12 @@
 ﻿using Caliburn.Micro;
-using MMFoodDesktopUI.Models;
+using MMFoodDesktopUI.Helper;
 using MMFoodDesktopUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+
 
 namespace MMFoodDesktopUI
 {
@@ -38,13 +37,12 @@ namespace MMFoodDesktopUI
         {
             _container.Instance(_container);
 
-            // Creating singletons for WindowManager and EventAggregator so we don't create multiple instances for it
-            // A Singleton creates an isntance of the class for scopted for the lifetime of the application
+            
             _container
                 .Singleton<IWindowManager, WindowManager>()
-                .Singleton<IEventAggregator, EventAggregator>();
-            // Using Reflection we are going to map all our Views and ViewModels to use our DI System
-            // For now the ViewModels wont have Interfaces, they are going to when we set up the Unit Test Class
+                .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<IAPIHelper, APIHelper>();
+            
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)
                 .Where(type => type.Name.EndsWith("ViewModel"))

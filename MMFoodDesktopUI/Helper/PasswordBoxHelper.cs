@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MMFoodDesktopUI.Models
+namespace MMFoodDesktopUI.Helper
 {
     public static class PasswordBoxHelper
     {

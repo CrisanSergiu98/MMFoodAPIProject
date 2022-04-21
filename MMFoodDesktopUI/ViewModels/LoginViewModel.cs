@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MMFoodDesktopUI.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,12 @@ namespace MMFoodDesktopUI.ViewModels
     {
         private string _username = "";
         private string _password;
+        private IAPIHelper _apiHelper;
+
+        public LoginViewModel(IAPIHelper apiHelper)
+        {
+            _apiHelper = apiHelper;
+        }
 
         public string Username
         {
@@ -39,18 +46,28 @@ namespace MMFoodDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (Username.Length > 0 && Password.Length > 6)
+                try
                 {
-                    output = true;
+                    if (Username.Length > 0 && Password.Length > 6)
+                    {
+                        output = true;
+                    }
                 }
-
+                catch
+                {
+                    _password = "";
+                    if (Username.Length > 0 && Password.Length > 6)
+                    {
+                        output = true;
+                    }
+                }
                 return output;
             }
         }
 
-        public void Login(string username, string password)
+        public async Task Login()
         {
-            Console.WriteLine();
+            var result = await _apiHelper.Authenticate(Username, Password);
         }
 
 
