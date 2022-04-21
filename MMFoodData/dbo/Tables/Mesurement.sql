@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Mesurement]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Scale] NCHAR(10) NOT NULL
+)
