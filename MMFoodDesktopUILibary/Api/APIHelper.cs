@@ -1,4 +1,5 @@
 ﻿
+using MMFoodDesktopUILibary.Models;
 using MMFoodDesktopUILibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,11 @@ namespace MMFoodDesktopUILibrary.Api
     public class APIHelper : IAPIHelper
     {
         public HttpClient apiClient;
+        private ILoggedInUserModel _loggedInUser;
 
-        public APIHelper()
+        public APIHelper( ILoggedInUserModel loggedInUser)
         {
+            _loggedInUser = loggedInUser;
             InitializeClient();
         }
 
@@ -59,6 +62,30 @@ namespace MMFoodDesktopUILibrary.Api
                 {
                     var result = await response.Content.ReadAsAsync<AuthenticatedUser>();
                     return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task GetLogedinUserInfo(string token)
+        {
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            apiClient.DefaultRequestHeaders.Add("Authorization", $"bearer {token}");
+
+            using (HttpResponseMessage response = await apiClient.GetAsync("api/User"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<LoggedInUserModel>();
+                    _loggedInUser.CreateDate = result.CreateDate;
+                    _loggedInUser.Email = result.Email;
+                    _loggedInUser.Username = result.Username;
+                    _loggedInUser.Id = result.Id;
+                    _loggedInUser.Token = token;
                 }
                 else
                 {

@@ -6,5 +6,6 @@ namespace MMFoodDesktopUILibrary.Api
     public interface IAPIHelper
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
+        Task GetLogedinUserInfo(string token);
     }
 }

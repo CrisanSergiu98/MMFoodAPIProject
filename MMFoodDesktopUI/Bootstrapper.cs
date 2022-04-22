@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MMFoodDesktopUI.Helper;
 using MMFoodDesktopUI.ViewModels;
+using MMFoodDesktopUILibary.Models;
 using MMFoodDesktopUILibrary.Api;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,8 @@ namespace MMFoodDesktopUI
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
-                .Singleton<IAPIHelper, APIHelper>();
+                .Singleton<IAPIHelper, APIHelper>()
+                .Singleton<ILoggedInUserModel , LoggedInUserModel>();
             
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)

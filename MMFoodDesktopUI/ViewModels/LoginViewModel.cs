@@ -115,17 +115,15 @@ namespace MMFoodDesktopUI.ViewModels
             try
             {
                 ErrorMessage = "";
+
                 var result = await _apiHelper.Authenticate(Username, Password);
+
+                await _apiHelper.GetLogedinUserInfo(result.access_token);
             }
             catch (Exception e)
             {
-                ErrorMessage = e.Message;
-
-                // Capture info about the current user
+                ErrorMessage = e.Message;                
             }
         }
-
-
-
     }
 }

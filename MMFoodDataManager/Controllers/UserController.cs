@@ -10,10 +10,10 @@ using System.Web.Http;
 
 namespace MMFoodDataManager.Controllers
 {
-    [Authorize]
-    [RoutePrefix("api/User")]
+    [Authorize]    
     public class UserController : ApiController
     {
+        [HttpGet]
         public UserModel GetById()
         {
             string userId = RequestContext.Principal.Identity.GetUserId();
