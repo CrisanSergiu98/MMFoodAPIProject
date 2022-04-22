@@ -14,13 +14,18 @@ namespace MMFoodDesktopUI.ViewModels
         private string _password;
         private string _errorMessage;
 
+        /// <summary>
+        /// Dependency Injection for our apiHelper
+        /// </summary>
         private IAPIHelper _apiHelper;
 
         public LoginViewModel(IAPIHelper apiHelper)
         {
             _apiHelper = apiHelper;
         }
-
+        /// <summary>
+        /// Capture the Username TextBox Text in this fullprop
+        /// </summary>
         public string Username
         {
             get { return _username; }
@@ -30,8 +35,10 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(()=> Username );
                 NotifyOfPropertyChange(() => CanLogin);               
             }
-        }    
-
+        }
+        /// <summary>
+        /// Capture the Password PaswordBox Text in this fullprop
+        /// </summary>
         public string Password
         {
             get { return _password; }
@@ -57,8 +64,9 @@ namespace MMFoodDesktopUI.ViewModels
             
         }
 
-        
-
+        /// <summary>
+        /// Capture the ErrorMessage TextBlock in this fullprop
+        /// </summary>
         public string ErrorMessage
         {
             get { return _errorMessage; }
@@ -69,10 +77,9 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => IsErrorVisible);
             }
         }
-
-
-
-
+        /// <summary>
+        /// A prop to give our NotifyOfPropertyChange(() => CanLogin) so the Login Button activates only if CanLigin is true
+        /// </summary>
         public bool CanLogin { 
             get
             {
@@ -97,6 +104,10 @@ namespace MMFoodDesktopUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Calls our apiHelper Authenticate Task
+        /// </summary>
+        /// <returns></returns>
         public async Task Login()
         {
             try

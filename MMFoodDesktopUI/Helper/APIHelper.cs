@@ -16,35 +16,42 @@ namespace MMFoodDesktopUI.Helper
 
         public APIHelper()
         {
-
             InitializeClient();
         }
 
+        /// <summary>
+        /// Initializing the HTTPClient
+        /// </summary>
         private void InitializeClient()
         {
+            // Get the api's value from app.config
             string api = ConfigurationManager.AppSettings["api"];
 
             apiClient = new HttpClient();
+            // Assign the api string to the BaseAddress of the client
             apiClient.BaseAddress = new Uri(api);
             apiClient.DefaultRequestHeaders.Accept.Clear();
             apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        /// <summary>
+        /// The Authenticate fuction
+        /// 
+        /// Makes an API Call to get the authToken
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public async Task<AuthenticatedUser> Authenticate(string username, string password)
         {
-            //var data = new FormUrlEncodedContent(new[] {
-            //    new KeyValuePair<string,string> ("grant_type", "password"),
-            //    new KeyValuePair<string,string> ("userName ", username),
-            //    new KeyValuePair<string,string> ("password", password)
-            //});
-
+            // Creating our pairs for the PostAsync
             var data = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 ["grant_type"] = "password",
                 ["username"] = username,
                 ["password"] = password
             });
-
+            // Creating an PostAsync for out /token route and passing in the value pairs we set up above.
             using (HttpResponseMessage response = await apiClient.PostAsync("/Token", data))
             {
                 if (response.IsSuccessStatusCode)
