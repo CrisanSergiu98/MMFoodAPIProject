@@ -1,7 +1,7 @@
-﻿using MMFoodDesktopUI.Models;
+﻿using MMFoodDesktopUILibrary.Models;
 using System.Threading.Tasks;
 
-namespace MMFoodDesktopUI.Helper
+namespace MMFoodDesktopUILibrary.Api
 {
     public interface IAPIHelper
     {

@@ -1,10 +1,12 @@
 ﻿using Caliburn.Micro;
 using MMFoodDesktopUI.Helper;
+using MMFoodDesktopUILibrary.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace MMFoodDesktopUI.ViewModels
 {
@@ -118,6 +120,8 @@ namespace MMFoodDesktopUI.ViewModels
             catch (Exception e)
             {
                 ErrorMessage = e.Message;
+
+                // Capture info about the current user
             }
         }
 

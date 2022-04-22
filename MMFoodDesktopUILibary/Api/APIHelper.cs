@@ -1,4 +1,5 @@
-﻿using MMFoodDesktopUI.Models;
+﻿
+using MMFoodDesktopUILibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,8 +9,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MMFoodDesktopUI.Helper
-{
+namespace MMFoodDesktopUILibrary.Api
+{ 
     public class APIHelper : IAPIHelper
     {
         public HttpClient apiClient;

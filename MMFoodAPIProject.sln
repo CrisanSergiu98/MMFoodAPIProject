@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMFoodDesktopUI", "MMFoodDe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMFoodDataManagerLibrary", "MMFoodDataManagerLibrary\MMFoodDataManagerLibrary.csproj", "{CBC4CD08-8536-4E1E-8009-C5AC9ACF3759}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMFoodDesktopUILibrary", "MMFoodDesktopUILibary\MMFoodDesktopUILibrary.csproj", "{8DA7538D-3DFB-4D14-8873-C5E33F690D1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{CBC4CD08-8536-4E1E-8009-C5AC9ACF3759}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBC4CD08-8536-4E1E-8009-C5AC9ACF3759}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBC4CD08-8536-4E1E-8009-C5AC9ACF3759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DA7538D-3DFB-4D14-8873-C5E33F690D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DA7538D-3DFB-4D14-8873-C5E33F690D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DA7538D-3DFB-4D14-8873-C5E33F690D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DA7538D-3DFB-4D14-8873-C5E33F690D1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
