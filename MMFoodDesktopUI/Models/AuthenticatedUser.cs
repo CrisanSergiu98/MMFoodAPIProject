@@ -8,7 +8,7 @@ namespace MMFoodDesktopUI.Models
 {
     public class AuthenticatedUser
     {
-        public string Access_Token { get; set; }
-        public string UserName { get; set; }
+        public string access_token { get; set; }
+        public string userName { get; set; }
     }
 }

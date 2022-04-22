@@ -67,7 +67,14 @@ namespace MMFoodDesktopUI.ViewModels
 
         public async Task Login()
         {
-            var result = await _apiHelper.Authenticate(Username, Password);
+            try
+            {
+                var result = await _apiHelper.Authenticate(Username, Password);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
 

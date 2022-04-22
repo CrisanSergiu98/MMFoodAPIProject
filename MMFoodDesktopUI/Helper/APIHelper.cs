@@ -32,11 +32,17 @@ namespace MMFoodDesktopUI.Helper
 
         public async Task<AuthenticatedUser> Authenticate(string username, string password)
         {
-            var data = new FormUrlEncodedContent(new[]
+            //var data = new FormUrlEncodedContent(new[] {
+            //    new KeyValuePair<string,string> ("grant_type", "password"),
+            //    new KeyValuePair<string,string> ("userName ", username),
+            //    new KeyValuePair<string,string> ("password", password)
+            //});
+
+            var data = new FormUrlEncodedContent(new Dictionary<string, string>
             {
-                new KeyValuePair<string,string> ("grant_type", "password"),
-                new KeyValuePair<string,string> ("username ", username),
-                new KeyValuePair<string,string> ("password", password)
+                ["grant_type"] = "password",
+                ["username"] = username,
+                ["password"] = password
             });
 
             using (HttpResponseMessage response = await apiClient.PostAsync("/Token", data))
