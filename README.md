@@ -6,6 +6,6 @@ A cooking recipe API backed by a SQL Server with a WPF App as an example UI.
 This is a portfolio project and the main purpose is to show of some of my code to potential employers.
 But I am going to release this API so any developer can use it for free in their projects.
 
-#Summary
+# Summary
 We have tree main projects: a SQLServer Project, an ASP.Net Api and a DesktopUi(WPF).
 Everything will use the .Net Framework initially because i want to simulate like a post-production update or in any case the transition between .NetFramewok and .NetCore.
