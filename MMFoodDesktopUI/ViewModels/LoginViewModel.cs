@@ -12,6 +12,8 @@ namespace MMFoodDesktopUI.ViewModels
     {
         private string _username = "";
         private string _password;
+        private string _errorMessage;
+
         private IAPIHelper _apiHelper;
 
         public LoginViewModel(IAPIHelper apiHelper)
@@ -39,7 +41,37 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => Password);
                 NotifyOfPropertyChange(() => CanLogin);                
             }
+        }        
+
+        public bool IsErrorVisible
+        {
+            get 
+            {
+                bool output = false;
+
+                if (ErrorMessage?.Length > 0)
+                    output = true;
+                
+                return output;
+            }
+            
         }
+
+        
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set 
+            {
+                _errorMessage = value;
+                NotifyOfPropertyChange(()=> ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorVisible);
+            }
+        }
+
+
+
 
         public bool CanLogin { 
             get
@@ -48,7 +80,7 @@ namespace MMFoodDesktopUI.ViewModels
 
                 try
                 {
-                    if (Username.Length > 0 && Password.Length > 6)
+                    if (Username.Length > 0 && Password?.Length > 6)
                     {
                         output = true;
                     }
@@ -69,11 +101,12 @@ namespace MMFoodDesktopUI.ViewModels
         {
             try
             {
+                ErrorMessage = "";
                 var result = await _apiHelper.Authenticate(Username, Password);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                ErrorMessage = e.Message;
             }
         }
 

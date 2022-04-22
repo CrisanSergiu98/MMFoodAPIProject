@@ -18,6 +18,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -29,9 +30,22 @@
                    FontFamily="Segoe UI Light"
                    Margin="0,20"
                    />
-        
+        <!--ErrorMessageRow-->
+        <TextBlock x:Name="ErrorMessage"
+                   Grid.Row="1" 
+                   Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   Foreground="Red"
+                   FontFamily="Segoe UI Light"
+                   FontSize="16"
+                   MaxWidth="260"
+                   TextWrapping="Wrap"
+                   Margin="0,10"
+                   Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConvertor}}"/>
+
         <!--Username Row-->
-        <TextBlock Grid.Row="1"
+        <TextBlock Grid.Row="2"
                    Grid.Column="1"
                    Margin="0 10"
                    FontSize="20"
@@ -40,13 +54,13 @@
             Username:            
         </TextBlock>
         <TextBox x:Name="Username"
-                 Grid.Row="1"
+                 Grid.Row="2"
                  Grid.Column="2"
                  MinWidth="150"
                  Margin="10"/>
         
         <!--Password Row-->
-        <TextBlock Grid.Row="2"
+        <TextBlock Grid.Row="3"
                    Grid.Column="1"
                    Margin="0 10"
                    FontSize="20"
@@ -55,12 +69,12 @@
             Password:
         </TextBlock>
         <PasswordBox x:Name="Password"
-                 Grid.Row="2"
+                 Grid.Row="3"
                  Grid.Column="2"
                  MinWidth="150"
                  Margin="10"/>
         <!--Button Row-->
-        <Button Grid.Row="3"
+        <Button Grid.Row="4"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 x:Name="Login"
