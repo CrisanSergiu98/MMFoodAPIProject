@@ -76,8 +76,19 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
+    <Compile Include="Models\IngredientModel.cs" />
+    <Compile Include="Models\IngredientCategoryModel.cs" />
+    <Compile Include="Models\QuantityModel.cs" />
+    <Compile Include="Models\RecipeIngredientModel.cs" />
+    <Compile Include="Models\RecipeModel.cs" />
+    <Compile Include="Models\RecipeStepModel.cs" />
+    <Compile Include="Models\UnitModel.cs" />
+    <Compile Include="ViewModels\CreateRecipeViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\CreateRecipeView.xaml.cs">
+      <DependentUpon>CreateRecipeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -88,6 +99,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CreateRecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,8 +145,6 @@
       <Name>MMFoodDesktopUILibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

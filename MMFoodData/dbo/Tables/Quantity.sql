@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Quantity]
 (
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+	[RecipeId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Value] NCHAR(10) NOT NULL
 )

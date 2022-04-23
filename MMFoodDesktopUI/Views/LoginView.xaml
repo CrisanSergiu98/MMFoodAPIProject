@@ -73,7 +73,8 @@
                  Grid.Row="3"
                  Grid.Column="2"
                  MinWidth="150"
-                 Margin="10"/>
+                 Margin="10"
+                 VerticalContentAlignment="Center"/>
         <!--Button Row-->
         <Button Grid.Row="4"
                 Grid.Column="1"

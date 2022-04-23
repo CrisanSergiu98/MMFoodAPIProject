@@ -91,4 +91,67 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Username" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="ee715122-1bd8-4e4f-85c0-293278373415" ChangeDateTime="04/23/2022 12:58:04">
+    <Property Name="ElementName" Value="[dbo].[Mesurement].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Mesurement]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RecipeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f0adf430-42ba-44d4-9e02-13f51dad7e8a" ChangeDateTime="04/23/2022 12:58:17">
+    <Property Name="ElementName" Value="[dbo].[Quantity].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Quantity]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RecipeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a88d4fa3-f940-4dec-b73f-396eb836fb74" ChangeDateTime="04/23/2022 19:08:35">
+    <Property Name="ElementName" Value="[dbo].[Recipe].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recipe]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Title" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="50e4ffbc-7373-4ae0-9c92-431d9c6de93e" ChangeDateTime="04/23/2022 19:59:52">
+    <Property Name="ElementName" Value="[dbo].[RecipeStep].[Number]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RecipeStep]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9347969a-b2bd-4f8f-8e16-65ca48cea747" ChangeDateTime="04/23/2022 20:00:00">
+    <Property Name="ElementName" Value="[dbo].[RecipeStep].[Description]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RecipeStep]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Details" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="570dcfa9-833e-4762-8148-b1b2d7507630" ChangeDateTime="04/23/2022 20:07:22">
+    <Property Name="ElementName" Value="[dbo].[RecipeStep].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RecipeStep]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Title" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7785f4f9-3f10-495b-9a0c-7a78b40b5cf8" ChangeDateTime="04/23/2022 21:18:31">
+    <Property Name="ElementName" Value="[dbo].[Mesurement].[Scale]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Mesurement]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Unit" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cffda416-1cec-45b8-9159-cdcc86932fcf" ChangeDateTime="04/23/2022 21:19:36">
+    <Property Name="ElementName" Value="[dbo].[Unit].[RecipeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Unit]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="564f03b0-5a6a-47cd-8b5b-83833be49374" ChangeDateTime="04/23/2022 21:19:44">
+    <Property Name="ElementName" Value="[dbo].[Unit].[Unit]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Unit]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
 </Operations>

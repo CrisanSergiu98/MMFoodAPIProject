@@ -10,11 +10,13 @@ namespace MMFoodDesktopUI.ViewModels
     public class ShellViewModel: Conductor<object>
     {
         private LoginViewModel _loginVM;
+        private CreateRecipeViewModel _createRecpieVM;
 
-        public ShellViewModel(LoginViewModel loginVM)
+        public ShellViewModel(LoginViewModel loginVM, CreateRecipeViewModel createRecipeVM)
         {
             _loginVM = loginVM;
-            ActivateItem(_loginVM);
+            _createRecpieVM = createRecipeVM;
+            ActivateItem(_createRecpieVM);
         }
 
     }

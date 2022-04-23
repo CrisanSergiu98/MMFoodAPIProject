@@ -7,17 +7,30 @@
         mc:Ignorable="d"
         Title="ShellView" Height="450" Width="800">
     <DockPanel>
+        
         <Menu DockPanel.Dock="Top" 
               FontSize="18">
             <MenuItem Header="File">
                 
             </MenuItem>
-            <MenuItem Header="User" HorizontalAlignment="Right" >
+
+            <MenuItem Header="Recipes">
+                <MenuItem Header="Create Recipe" FontSize="16"/>
+                <MenuItem Header="My Recpies" FontSize="16"/>
+                <MenuItem Header="My Fridge Search" FontSize="16"/>
+                <MenuItem Header="Search" FontSize="16"/>
+            </MenuItem>
+
+            <MenuItem Header="Fridge">                
+            </MenuItem>
+            
+            <MenuItem Header="User">
                 <MenuItem Header="Login" FontSize="16"/>
             </MenuItem>
+            
         </Menu>
         <Grid>
-            <ContentControl x:Name="ActiveItem" Margin="5"/>
+            <ContentControl x:Name="ActiveItem"/>
         </Grid>
     </DockPanel>
 </Window>
