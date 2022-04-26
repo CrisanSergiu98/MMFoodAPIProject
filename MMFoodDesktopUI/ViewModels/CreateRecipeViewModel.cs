@@ -7,17 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MMFoodDesktopUILibrary.Api;
+using MMFoodDesktopUILibary.Api;
+using MMFoodDesktopUILibary.Models;
 
 namespace MMFoodDesktopUI.ViewModels
 {
     public class CreateRecipeViewModel: Screen
     {
+        private ICategoryEndPoint _categoryEndPoint;
         private IAPIHelper _apiHelper;
         /// <summary>
         /// This will be our backing field for pretty much evrything and we are goign to pass this along when we do the recording of the recipe
         /// </summary>
         private RecipeModel _recipe;
-        private BindingList<RecipeCategoryModel> _categories;
+        private BindingList<CategoryModel> _categories;
 
         /// <summary>
         /// Property that gets and sents for the _recipe.
@@ -76,7 +79,7 @@ namespace MMFoodDesktopUI.ViewModels
         /// <summary>
         /// Full Prop that gets the categories from the api
         /// </summary>
-        public BindingList<RecipeCategoryModel> Categories
+        public BindingList<CategoryModel> Categories
         {
             get 
             {
@@ -85,18 +88,33 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _categories = value;
+                NotifyOfPropertyChange(() => Categories);
             }
         }
 
-        public CreateRecipeViewModel(IAPIHelper aPIHelper)
+        public CreateRecipeViewModel(IAPIHelper aPIHelper, ICategoryEndPoint categoryEndPoint)
         {
             _apiHelper = aPIHelper;
-            //get categories from API
+            _categoryEndPoint = categoryEndPoint;
+
             _recipe = new RecipeModel();
             _recipe.PictureUrl = "your Url";
             _recipe.Ingredients = new List<IngredientModel>();
             _recipe.Steps = new List<RecipeStepModel>();
         }
+
+        protected override async void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            await LoadCategories();
+        }
+
+        private async Task LoadCategories()
+        {
+            var categoryList = await _categoryEndPoint.GetAll();
+            Categories = new BindingList<CategoryModel>(categoryList);
+        }
+
 
         public void SaveRecipe()
         {

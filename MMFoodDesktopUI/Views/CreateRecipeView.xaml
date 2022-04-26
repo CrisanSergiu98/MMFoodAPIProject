@@ -112,14 +112,15 @@
                 <TextBlock Text="Category"
                             Style="{StaticResource DefaultTitle}"/>
                 <ComboBox ItemsSource="{Binding Path = Categories}"
-                            DisplayMemberPath="Name"
-                            MinWidth="100"
-                            Margin="5"
-                            VerticalAlignment="Bottom"/>
-                    
-
-
-        </StackPanel>
+                          DisplayMemberPath="Name"
+                          MinWidth="100"
+                          Margin="5"
+                          VerticalAlignment="Bottom"
+                          IsTextSearchEnabled="True"
+                          IsEditable="True"
+                          />
+                
+            </StackPanel>
             <Separator/>
 
             <!--Description Senction Title-->

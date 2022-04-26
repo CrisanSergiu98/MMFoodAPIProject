@@ -1,4 +1,5 @@
 ﻿using MMFoodDesktopUILibrary.Models;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MMFoodDesktopUILibrary.Api
@@ -7,5 +8,6 @@ namespace MMFoodDesktopUILibrary.Api
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
         Task GetLogedinUserInfo(string token);
+        HttpClient ApiClient { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MMFoodDesktopUI.EventModels;
 using MMFoodDesktopUI.Helper;
 using MMFoodDesktopUILibrary.Api;
 using System;
@@ -20,9 +21,11 @@ namespace MMFoodDesktopUI.ViewModels
         /// Dependency Injection for our apiHelper
         /// </summary>
         private IAPIHelper _apiHelper;
+        private IEventAggregator _events;
 
-        public LoginViewModel(IAPIHelper apiHelper)
+        public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {
+            _events = events;
             _apiHelper = apiHelper;
         }
         /// <summary>
@@ -119,6 +122,8 @@ namespace MMFoodDesktopUI.ViewModels
                 var result = await _apiHelper.Authenticate(Username, Password);
 
                 await _apiHelper.GetLogedinUserInfo(result.access_token);
+
+                _events.PublishOnUIThread(new LogOnEvent());
             }
             catch (Exception e)
             {

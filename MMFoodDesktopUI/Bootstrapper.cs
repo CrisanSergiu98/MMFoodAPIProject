@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MMFoodDesktopUI.Helper;
 using MMFoodDesktopUI.ViewModels;
+using MMFoodDesktopUILibary.Api;
 using MMFoodDesktopUILibary.Models;
 using MMFoodDesktopUILibrary.Api;
 using System;
@@ -37,7 +38,8 @@ namespace MMFoodDesktopUI
         /// </summary>
         protected override void Configure()
         {
-            _container.Instance(_container);
+            _container.Instance(_container)
+                .PerRequest<ICategoryEndPoint, CategoryEndPoint>();
 
             
             _container
