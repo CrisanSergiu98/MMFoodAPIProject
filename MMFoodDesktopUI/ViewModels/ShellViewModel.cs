@@ -12,18 +12,15 @@ namespace MMFoodDesktopUI.ViewModels
     {        
         private CreateRecipeViewModel _createRecpieVM;
         private IEventAggregator _events;
-        private SimpleContainer _contaier;
 
-        public ShellViewModel(CreateRecipeViewModel createRecipeVM, IEventAggregator events,
-            SimpleContainer container)
+        public ShellViewModel(CreateRecipeViewModel createRecipeVM, IEventAggregator events)
         {
             _events = events;
             _createRecpieVM = createRecipeVM;
-            _contaier = container;
 
             _events.Subscribe(this);
 
-            ActivateItem(_contaier.GetInstance<LoginViewModel>());
+            ActivateItem(IoC.Get<LoginViewModel>());
         }
 
         public void Handle(LogOnEvent message)
