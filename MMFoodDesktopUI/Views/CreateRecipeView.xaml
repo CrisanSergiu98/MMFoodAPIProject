@@ -26,7 +26,15 @@
             <Setter Property="Padding" Value="10,5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="MinHeight" Value="10"/>
-            <Setter Property="MaxWidth" Value="30"/>
+            
+        </Style>
+        
+        <!--ActionButtonsStyle-->
+        <Style BasedOn="{StaticResource {x:Type Button}}"
+               x:Key="ActionButton"
+               TargetType="Button">
+            <Setter Property="MinWidth" Value="50"/>
+            <Setter Property="BorderBrush" Value="LightGreen"/>
         </Style>
 
         <!--BaseTextBoxStyle-->
@@ -42,7 +50,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="30"/>
-
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         
         <!--Title TextBox-->
@@ -57,9 +65,7 @@
         <Style  x:Key="RecipeTytleStyle"
                 TargetType="TextBox"             
                 BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="TextDecorations" Value="Underline"/>
-            <Setter Property="FontSize" Value="50"/>
-            <Setter Property="Foreground" Value="DarkGray"/>
+            <Setter Property="FontSize" Value="50"/>            
         </Style>
         
         <!--Descritption TextBox Style-->
@@ -71,158 +77,172 @@
 
     </UserControl.Resources>
     <ScrollViewer>
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="50"/>
-        </Grid.ColumnDefinitions>
-        
-        <!--Picture-->
-        
-        
-        <!--Title section-->
-        <TextBox Grid.Column="1"
-                 Grid.Row="2"
-                 Text="Your recipe name"
-                 Style="{StaticResource RecipeTytleStyle}"/>
+        <StackPanel Margin="20"
+                    Orientation="Vertical">
+            
+            <!--Title + Picture-->
+            <StackPanel Orientation="Horizontal">
+                <!--Picture-->
+                <Image Source="{Binding Path=PictureUrl}"
+                        HorizontalAlignment="Left"
+                        />
 
-        <!--Description Senction Title-->
-        <TextBlock Grid.Column="1"
-                 Grid.Row="3"
-                 Text="Description"
-                Style="{StaticResource DefaultTitle}"/>
+                <!--Title section-->
+                <TextBox Text="Your recipe name"
+                            Style="{StaticResource RecipeTytleStyle}"
+                            VerticalContentAlignment="Bottom"/>
 
-        <!--Description Box-->
-        <TextBox Grid.Column="1"
-                 Grid.Row="4"
-                 Text="A short escription of your recipe."
-                 Style="{StaticResource DescriptionBox}"
-                 />
+            </StackPanel>
+            <Separator/>
+            
+            <!--Picture URL-->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                    
+                <TextBlock Text="Pic URL:"
+                            Margin="0,0,5,0"
+                            />
+                <TextBox Text="{Binding Path = PictureUrl}"
+                            MinWidth="150"
+                            MaxWidth="400"/>
+            </StackPanel>
+                
+            <!--Category Senction-->
+            <StackPanel Orientation="Horizontal">
+                    
+                <TextBlock Text="Category"
+                            Style="{StaticResource DefaultTitle}"/>
+                <ComboBox ItemsSource="{Binding Path = Categories}"
+                            DisplayMemberPath="Name"
+                            MinWidth="100"
+                            Margin="5"
+                            VerticalAlignment="Bottom"/>
+                    
+
+
+        </StackPanel>
+            <Separator/>
+
+            <!--Description Senction Title-->
+            <TextBlock Text="Description"
+                        Style="{StaticResource DefaultTitle}"/>
+            <Separator/>                
+                
+            <!--Description Box-->
+            <TextBox Grid.Column="1"
+                        Grid.Row="8"
+                        Text="A short escription of your recipe."
+                        Style="{StaticResource DescriptionBox}"
+                        />
         
-        <!--Ingredients section-->
-        <TextBlock Grid.Column="1"
-                 Grid.Row="5"
-                 Text="Ingredients"
-                 Style="{StaticResource DefaultTitle}"/>
-
-        <!--Ingredients List-->
-        <ListBox ItemsSource="{Binding Path = RecipeIngredients, Mode=TwoWay}"
-                 Grid.Row="6"
-                 Grid.Column="1"
-                 FontSize="20"
-                 >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel HorizontalAlignment="Left"
-                               MinHeight="10"
-                               >
-                            <TextBlock Text="Ingredient:"
-                                   Margin="5"
-                                   VerticalAlignment="Center"/>
-                            <ComboBox SelectedItem="{Binding Ingredient.Name}"
-                                  Text="{Binding Ingredient.Name}"
-                                  ItemsSource="{Binding Ingredient.GetFirstTenMatching}"
-                                  IsEditable="True"
-                                  IsTextSearchEnabled="True"
-                                  Background="Transparent"
-                                  BorderBrush="Transparent"
-                                  MinWidth="100"
-                                  Margin="5"
-                                  VerticalContentAlignment="Center"
-                                  >
-                        </ComboBox>
+            <!--Ingredients section-->
+            <TextBlock Text="Ingredients"
+                        Style="{StaticResource DefaultTitle}"/>
+            <Separator/>     
+            <!--Ingredients List-->
+            <ListBox ItemsSource="{Binding Path = Ingredients, Mode=TwoWay}"
+                        FontSize="20"
+                        >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel HorizontalAlignment="Left"
+                                    MinHeight="10"
+                                    >
+                                <TextBlock Text="Ingredient:"
+                                        Margin="5"
+                                        VerticalAlignment="Center"/>
+                        <ComboBox SelectedItem="{Binding Path = Name}"
+                                        Text="{Binding Path = Name}"
+                                        ItemsSource="{Binding Path = GetFirstTenMatching}"
+                                        IsEditable="True"
+                                        IsTextSearchEnabled="True"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        MinWidth="100"
+                                        Margin="5"
+                                        VerticalContentAlignment="Center"
+                                        Width="150"
+                                        />
                         <TextBlock Text="Qty:"
-                                   Margin="5"
-                                   VerticalAlignment="Center"/>
-                        <TextBox HorizontalAlignment="Left"
-                                 MinWidth="25"
-                                 Text="{Binding Quantity.Value}"
-                                 Margin="5"
-                                 VerticalAlignment="Center"/>
-                        <TextBlock Text="Unit:"
-                                   Margin="5"
-                                   VerticalAlignment="Center"/>
+                                        Margin="5"
+                                        VerticalAlignment="Center"
+                                        />
+                            <TextBox HorizontalAlignment="Left"
+                                        MinWidth="25"
+                                        Text="{Binding Quantity.Value}"
+                                        Margin="5"
+                                        VerticalAlignment="Center"
+                                        Width="50"/>
+                            <TextBlock Text="Unit:"
+                                        Margin="5"
+                                        VerticalAlignment="Center"/>
                         
-                        <ComboBox SelectedItem="{Binding Unit.Name}"
-                                  Text="{Binding Unit.Name}"
-                                  ItemsSource="{Binding Unit.SearchResults}"
-                                  IsEditable="True"
-                                  IsTextSearchEnabled="True"
-                                  Background="Transparent"
-                                  BorderBrush="Transparent"
-                                  MinWidth="25"
-                                  Margin="5"
-                                  VerticalContentAlignment="Center"
-                                  >
-                        </ComboBox>
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                            <ComboBox SelectedItem="{Binding Unit.Name}"
+                                        Text="{Binding Unit.Name}"
+                                        ItemsSource="{Binding Unit.SearchResults}"
+                                        IsEditable="True"
+                                        IsTextSearchEnabled="True"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        MinWidth="25"
+                                        Margin="5"
+                                        VerticalContentAlignment="Center"
+                                        Width="50"
+                                        >
+                            </ComboBox>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-        <!--Add New Ingredient Button-->
-        <Button x:Name="AddIngredientToRecipe"                
-                 Grid.Column="1"
-                 Grid.Row="7"
-                 HorizontalAlignment="Left"
-                 Content="+"/>
+            <!--Add New Ingredient Button-->
+            <Button x:Name="AddIngredientToRecipe"
+                    HorizontalAlignment="Left"
+                    Content="+"/>
 
-         <!--Steps Section Title-->
-        <TextBlock Grid.Column="1"
-                 Grid.Row="8"
-                 Text="Steps"
-                Style="{StaticResource DefaultTitle}"/>
-        
-        <!--Step List-->
-        <ListBox Grid.Column="1"
-                 Grid.Row="9"
-                 ItemsSource="{Binding Path=Steps}"
-                 FontSize="20"
-                 >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
+                <!--Steps Section Title-->
+            <TextBlock Text="Steps"
+                        Style="{StaticResource DefaultTitle}"/>
+            <Separator/>     
+            <!--Step List-->
+            <ListBox ItemsSource="{Binding Path=Steps}"
+                        FontSize="20"
+                        >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="{Binding StepNumber}"
-                                       Style="{StaticResource DefaultTitle}"
-                                       FontSize="20"/>
+                                <TextBlock Text="{Binding Path =StepNumber }"
+                                            Style="{StaticResource DefaultTitle}"
+                                            FontSize="20"/>
                             
-                                <TextBox Text="{Binding Title}"
-                                         Style="{StaticResource DefaultTitleBox}"
-                                         FontSize="20"/>
-                            </StackPanel>
-                        <TextBox Text="{Binding Details}"
-                                 FontSize="15"/>
-                    </StackPanel>                    
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                                    <TextBox Text="{Binding Title}"
+                                                Style="{StaticResource DefaultTitleBox}"
+                                                FontSize="20"/>
+                                </StackPanel>
+                            <TextBox Text="{Binding Path= Details}"
+                                        FontSize="15"/>
+                        </StackPanel>                    
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         
-        <!--Add New Step Button-->
-        <Button x:Name="addStepToRecipe"                
-                 Grid.Column="1"
-                 Grid.Row="10"
-                 HorizontalAlignment="Left"
-                 Content="+"/>
-    </Grid>
+            <!--Add New Step Button-->
+            <Button x:Name="addStepToRecipe"
+                    HorizontalAlignment="Left"
+                    Content="+"/> 
+            
+            <!--Action Section-->
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="SaveRecipe"
+                        Content="Save"
+                        Style="{StaticResource ActionButton}"/>
+                <Button x:Name="PublishRecipe"
+                        Content="Publish"
+                        Style="{StaticResource ActionButton}"/>
+                <Button Content="Clear'n'Exit"
+                        Style="{StaticResource ActionButton}"/>
+            </StackPanel>    
+         </StackPanel>        
     </ScrollViewer>
 </UserControl>

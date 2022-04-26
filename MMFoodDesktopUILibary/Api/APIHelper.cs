@@ -72,6 +72,7 @@ namespace MMFoodDesktopUILibrary.Api
 
         public async Task GetLogedinUserInfo(string token)
         {
+            apiClient.DefaultRequestHeaders.Clear();
             apiClient.DefaultRequestHeaders.Accept.Clear();
             apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             apiClient.DefaultRequestHeaders.Add("Authorization", $"bearer {token}");

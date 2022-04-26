@@ -21,6 +21,7 @@ namespace MMFoodDesktopUI.Models
             }
         }
         public QuantityModel Quantity { get; set; }
+        public UnitModel Unit { get; set; }
 
     }
 }

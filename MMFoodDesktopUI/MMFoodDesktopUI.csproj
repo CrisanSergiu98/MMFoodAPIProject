@@ -79,7 +79,7 @@
     <Compile Include="Models\IngredientModel.cs" />
     <Compile Include="Models\IngredientCategoryModel.cs" />
     <Compile Include="Models\QuantityModel.cs" />
-    <Compile Include="Models\RecipeIngredientModel.cs" />
+    <Compile Include="Models\RecipeCategoryModel.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\RecipeStepModel.cs" />
     <Compile Include="Models\UnitModel.cs" />
