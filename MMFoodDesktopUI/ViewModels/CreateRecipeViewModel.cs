@@ -1,5 +1,4 @@
 ﻿using Caliburn.Micro;
-using MMFoodDesktopUI.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,24 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using MMFoodDesktopUILibrary.Api;
 using MMFoodDesktopUILibary.Api;
-using MMFoodDesktopUILibary.Models;
+using System.Net;
+using MMFoodDesktopUILibrary.Models;
 
 namespace MMFoodDesktopUI.ViewModels
 {
     public class CreateRecipeViewModel: Screen
     {
         private ICategoryEndPoint _categoryEndPoint;
-        private IAPIHelper _apiHelper;
-        /// <summary>
-        /// This will be our backing field for pretty much evrything and we are goign to pass this along when we do the recording of the recipe
-        /// </summary>
+        private IRecipeEndPoint _recipeEndpoint;
+
         private RecipeModel _recipe;
         private BindingList<CategoryModel> _categories;
-
-        /// <summary>
-        /// Property that gets and sents for the _recipe.
-        /// We bind our UI with this property and they act like a middle man between the _recipe and the user info
-        /// </summary>
+        
         public string PictureUrl
         {
             get { return _recipe.PictureUrl; }
@@ -35,10 +29,7 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => PictureUrl);
             }
         }
-        /// <summary>
-        /// Property that gets and sents for the _recipe.
-        /// We bind our UI with this property and they act like a middle man between the _recipe and the user info
-        /// </summary>
+        
         public BindingList<IngredientModel> Ingredients 
         {
             get
@@ -55,11 +46,7 @@ namespace MMFoodDesktopUI.ViewModels
                 }
             }
         }
-
-        /// <summary>
-        /// Property that gets and sents for the _recipe.
-        /// We bind our UI with this property and they act like a middle man between the _recipe and the user info
-        /// </summary>
+        
         public BindingList<RecipeStepModel> Steps
         {
             get
@@ -75,10 +62,7 @@ namespace MMFoodDesktopUI.ViewModels
                 }
             }
         }
-
-        /// <summary>
-        /// Full Prop that gets the categories from the api
-        /// </summary>
+        
         public BindingList<CategoryModel> Categories
         {
             get 
@@ -92,13 +76,29 @@ namespace MMFoodDesktopUI.ViewModels
             }
         }
 
-        public CreateRecipeViewModel(IAPIHelper aPIHelper, ICategoryEndPoint categoryEndPoint)
+        private CategoryModel _selectedCategory;
+
+        public CategoryModel SelectedCategory
+            
         {
-            _apiHelper = aPIHelper;
+            get 
+            { 
+                return _selectedCategory;
+            }
+            set 
+            { 
+                _selectedCategory = value;
+                NotifyOfPropertyChange(() => SelectedCategory);
+            }
+        }       
+
+
+        public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint)
+        {            
             _categoryEndPoint = categoryEndPoint;
+            _recipeEndpoint = recipeEndpoint;
 
             _recipe = new RecipeModel();
-            _recipe.PictureUrl = "your Url";
             _recipe.Ingredients = new List<IngredientModel>();
             _recipe.Steps = new List<RecipeStepModel>();
         }
@@ -115,11 +115,65 @@ namespace MMFoodDesktopUI.ViewModels
             Categories = new BindingList<CategoryModel>(categoryList);
         }
 
-
-        public void SaveRecipe()
+        private async Task SaveRecipe(RecipeModel recipe)
         {
-
+            //if (ValidateRecipe(recipe))
+            if (true)
+            {
+                await _recipeEndpoint.PostRecipe(_recipe);
+            }
         }
+        private bool CanPublish(RecipeModel recipe)
+        {
+            var output = true;
+
+            if (recipe.Ingredients == null)
+                output = false;
+            if (recipe.Ingredients.Count == 0)
+                output = false;
+
+            if (recipe.Title == null)
+                output = false;
+            if (recipe.Title == "")
+                output = false;
+
+            if (recipe.Description == null)
+                output = false;
+            if (recipe.Description == "")
+                output = false;
+
+            if (recipe.Steps == null)
+                output = false;
+            if (recipe.Steps.Count == 0)
+                output = false;
+
+            if (PictureUrlCheck(PictureUrl))
+                output = false;
+
+            return output;
+        }
+
+        private bool CanSave(RecipeModel recipe)
+        {
+            bool output = true;
+            return output;
+        }
+
+        private bool PictureUrlCheck(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("url");
+            request.Method = "HEAD";
+
+            try
+            {
+                request.GetResponse();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }        
 
         public void PublishRecipe()
         {
@@ -129,9 +183,8 @@ namespace MMFoodDesktopUI.ViewModels
         public void AddIngredientToRecipe()
         {
             var output = new IngredientModel();
-            output.Name = "";
-            output.Quantity = new QuantityModel();
-            output.Unit = new UnitModel();
+            //output.Name = "";
+            //output.Quantity = "";
 
             Ingredients.Add(output);
             NotifyOfPropertyChange(() =>Ingredients);
@@ -149,13 +202,6 @@ namespace MMFoodDesktopUI.ViewModels
             NotifyOfPropertyChange(() => Steps);
         }
 
-        private void Save()
-        {
-
-        }
-        private void SaveAndPublish()
-        {
-
-        }
+        
     }
 }

@@ -77,12 +77,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="EventModels\LogOnEvent.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
-    <Compile Include="Models\IngredientModel.cs" />
-    <Compile Include="Models\IngredientCategoryModel.cs" />
-    <Compile Include="Models\QuantityModel.cs" />
-    <Compile Include="Models\RecipeModel.cs" />
-    <Compile Include="Models\RecipeStepModel.cs" />
-    <Compile Include="Models\UnitModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="ViewModels\CreateRecipeViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />

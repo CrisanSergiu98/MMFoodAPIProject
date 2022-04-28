@@ -39,7 +39,8 @@ namespace MMFoodDesktopUI
         protected override void Configure()
         {
             _container.Instance(_container)
-                .PerRequest<ICategoryEndPoint, CategoryEndPoint>();
+                .PerRequest<ICategoryEndPoint, CategoryEndPoint>()
+                .PerRequest<IRecipeEndPoint, RecipeEndPoint>();
 
             
             _container

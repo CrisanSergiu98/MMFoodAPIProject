@@ -1,8 +1,8 @@
 ﻿namespace MMFoodDataManagerLibrary.Models
 {
-    public class CategoryModel
+    public class IngredientModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
+        public CategoryModel Category { get; set; }
     }
 }

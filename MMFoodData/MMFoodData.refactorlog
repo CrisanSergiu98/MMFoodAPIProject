@@ -182,4 +182,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CategoryId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="5b4b7986-642d-42cc-80e0-8b4bb85bffda" ChangeDateTime="04/26/2022 20:13:38">
+    <Property Name="ElementName" Value="[dbo].[RecipeIngredient].[QuantityId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RecipeIngredient]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Quantity" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3b93f77a-d81c-4239-91e5-02aa4eb782b1" ChangeDateTime="04/26/2022 20:20:27">
+    <Property Name="ElementName" Value="[dbo].[RecipeIngredient].[UnitId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RecipeIngredient]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Unit" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="beefdc68-d0eb-4878-9ef9-5bbee186d18e" ChangeDateTime="04/26/2022 20:48:54">
+    <Property Name="ElementName" Value="[dbo].[Ingredient].[PuctureURL]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ingredient]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PuctureUrl" />
+  </Operation>
 </Operations>

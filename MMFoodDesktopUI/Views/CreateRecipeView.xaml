@@ -112,6 +112,7 @@
                 <TextBlock Text="Category"
                             Style="{StaticResource DefaultTitle}"/>
                 <ComboBox ItemsSource="{Binding Path = Categories}"
+                          SelectedItem="{Binding Path = SelectedCategory}"
                           DisplayMemberPath="Name"
                           MinWidth="100"
                           Margin="5"
@@ -169,7 +170,7 @@
                                         />
                             <TextBox HorizontalAlignment="Left"
                                         MinWidth="25"
-                                        Text="{Binding Quantity.Value}"
+                                        Text="{Binding Path=Quantity}"
                                         Margin="5"
                                         VerticalAlignment="Center"
                                         Width="50"/>
@@ -184,10 +185,9 @@
                                         IsTextSearchEnabled="True"
                                         Background="Transparent"
                                         BorderBrush="Transparent"
-                                        MinWidth="25"
                                         Margin="5"
                                         VerticalContentAlignment="Center"
-                                        Width="50"
+                                        Width="100"
                                         >
                             </ComboBox>
                         </DockPanel>
@@ -237,10 +237,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="SaveRecipe"
                         Content="Save"
-                        Style="{StaticResource ActionButton}"/>
-                <Button x:Name="PublishRecipe"
-                        Content="Publish"
-                        Style="{StaticResource ActionButton}"/>
+                        Style="{StaticResource ActionButton}"/>                
                 <Button Content="Clear'n'Exit"
                         Style="{StaticResource ActionButton}"/>
             </StackPanel>    

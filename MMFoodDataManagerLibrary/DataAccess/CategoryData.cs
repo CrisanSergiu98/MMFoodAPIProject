@@ -10,11 +10,11 @@ namespace MMFoodDataManagerLibrary.DataAccess
 {
     public class CategoryData
     {
-        public List<CategoryModel> GetCategories()
+        public List<CategoryDBModel> GetAllCategories()
         {
             SQLDataAccess sql = new SQLDataAccess();
         
-            var output = sql.LoadData<CategoryModel, dynamic>("dbo.spCategory_GetAll", new { }, "MMFoodData");
+            var output = sql.LoadData<CategoryDBModel, dynamic>("dbo.spCategory_GetAll", new { }, "MMFoodData");
 
             return output;
         }

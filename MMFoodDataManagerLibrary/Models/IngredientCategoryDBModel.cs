@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MMFoodDesktopUILibrary.Models
+namespace MMFoodDataManagerLibrary.Models
 {
-    public class CategoryModel
-    {        
+    public class IngredientCategoryDBModel
+    {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string PictureURL { get; set; }
+        public string PictureUrl { get; set; }
+
     }
 }
