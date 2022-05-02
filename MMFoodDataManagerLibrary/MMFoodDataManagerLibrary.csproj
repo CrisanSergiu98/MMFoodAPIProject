@@ -46,21 +46,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\CategoryData.cs" />
+    <Compile Include="DataAccess\IngredientCategoryData.cs" />
     <Compile Include="DataAccess\IngredientData.cs" />
     <Compile Include="DataAccess\RecipeIngredientData.cs" />
     <Compile Include="DataAccess\RecipeData.cs" />
-    <Compile Include="Models\CategoryDBModel.cs" />
+    <Compile Include="DataAccess\StepData.cs" />
+    <Compile Include="Internal\Helpers\ModelCovertion.cs" />
+    <Compile Include="Models\DBModels\CategoryDBModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\IngredientCategory.cs" />
-    <Compile Include="Models\IngredientCategoryDBModel.cs" />
-    <Compile Include="Models\IngredientDBModel.cs" />
+    <Compile Include="Models\DBModels\IngredientCategoryDBModel.cs" />
+    <Compile Include="Models\DBModels\IngredientDBModel.cs" />
     <Compile Include="Models\IngredientModel.cs" />
-    <Compile Include="Models\RecipeIngredient.cs" />
-    <Compile Include="Models\RecipeIngredientDBModel.cs" />
-    <Compile Include="Models\RecipeDBModel.cs" />
+    <Compile Include="Models\DBModels\RecipeIngredientDBModel.cs" />
+    <Compile Include="Models\DBModels\RecipeDBModel.cs" />
+    <Compile Include="Models\RecipeIngredientModel.cs" />
     <Compile Include="Models\RecipeModel.cs" />
-    <Compile Include="Models\RecipeStepModel.cs" />
-    <Compile Include="Models\StepDBModel.cs" />
+    <Compile Include="Models\DBModels\StepDBModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\DataAccess\SQLDataAccess.cs" />

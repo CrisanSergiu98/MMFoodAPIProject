@@ -203,4 +203,46 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PuctureUrl" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="44ad64f7-e842-4e1c-921f-6bdd15db88bc" ChangeDateTime="04/28/2022 13:28:35">
+    <Property Name="ElementName" Value="[dbo].[Recipe].[Published]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recipe]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsPublished" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f54a9f0a-e225-4724-9d4a-6a0ff4d8363f" ChangeDateTime="04/28/2022 17:59:49">
+    <Property Name="ElementName" Value="[dbo].[Ingredient].[PuctureUrl]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ingredient]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PictureUrl" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="302e9234-6b99-4aab-a7d4-22775d83ec69" ChangeDateTime="04/28/2022 19:40:03">
+    <Property Name="ElementName" Value="[dbo].[IngredientCategory].[PictureURL]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[IngredientCategory]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PictureUrl" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1ed610fc-a4b3-47c2-8cb3-bb95b5317170" ChangeDateTime="04/28/2022 19:40:20">
+    <Property Name="ElementName" Value="[dbo].[Recipe].[PictureURL]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recipe]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PictureUrl" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3683f45e-fa0d-456c-a83a-bde7474fe39f" ChangeDateTime="04/29/2022 16:45:52">
+    <Property Name="ElementName" Value="[dbo].[RecipeCategory].[PictureURL]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RecipeCategory]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PictureUrl" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="edb75d7f-df7a-445c-824d-e0aad3871a6e" ChangeDateTime="05/02/2022 09:43:28">
+    <Property Name="ElementName" Value="[dbo].[Quisine].[NAme]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Quisine]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
 </Operations>

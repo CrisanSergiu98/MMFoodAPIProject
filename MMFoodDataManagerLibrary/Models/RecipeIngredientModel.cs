@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MMFoodDataManagerLibrary.Models
 {
-    public class RecipeIngredient
+    public class RecipeIngredientModel
     {
         public IngredientModel Ingredient { get; set; }
         public float Quantity { get; set; }
-        public IngredientCategory Category { get; set; }
         public string Unit { get; set; }
+        public bool IsReqired { get; set; }
     }
 }

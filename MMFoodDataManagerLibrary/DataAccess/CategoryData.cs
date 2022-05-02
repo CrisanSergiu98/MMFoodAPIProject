@@ -10,13 +10,46 @@ namespace MMFoodDataManagerLibrary.DataAccess
 {
     public class CategoryData
     {
-        public List<CategoryDBModel> GetAllCategories()
+        //public CategoryDBModel SaveCategory(CategoryModel category)
+        //{
+        //    SQLDataAccess sql = new SQLDataAccess();
+
+        //    CategoryDBModel dbCategory = new CategoryDBModel();
+
+        //    dbCategory.Name = category.Name;
+
+        //    try
+        //    {
+        //        dbCategory.Id = sql.LoadData<int, dynamic>("dbo.spCategory_Lookup", new { Name = dbCategory.Name }, "MMFoodData").FirstOrDefault();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        string i = e.Message;
+
+        //        try
+        //        {
+        //            sql.SaveData("dbo.spCategory_Insert", dbCategory, "MMFoodData");
+
+        //            dbCategory.Id = sql.LoadData<int, dynamic>("dbo.spCategory_Lookup", new { Name = dbCategory.Name }, "MMFoodData").FirstOrDefault();
+        //        }
+        //        catch (Exception f)
+        //        {
+        //            string j = f.Message;
+        //            throw new Exception();
+        //        }
+        //    }   
+        //    return dbCategory;
+        //}        
+        public int Lookup(string name)
         {
             SQLDataAccess sql = new SQLDataAccess();
-        
-            var output = sql.LoadData<CategoryDBModel, dynamic>("dbo.spCategory_GetAll", new { }, "MMFoodData");
 
-            return output;
+            return sql.LoadData<int, dynamic>("dbo.spCategory_Lookup", new { Name = name }, "MMFoodData").FirstOrDefault();
+        }
+
+        public List<CategoryDBModel> GetAllCategories()
+        {
+            return new List<CategoryDBModel>();
         }
     }
 }

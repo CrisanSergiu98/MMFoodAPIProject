@@ -16,10 +16,13 @@ namespace MMFoodDesktopUI.ViewModels
     {
         private ICategoryEndPoint _categoryEndPoint;
         private IRecipeEndPoint _recipeEndpoint;
+        private IIngredientEndPoint _ingredientEndPoint;
 
+        private IngredientModel _selectedIngredient;
         private RecipeModel _recipe;
         private BindingList<CategoryModel> _categories;
-        
+        private CategoryModel _selectedCategory;
+
         public string PictureUrl
         {
             get { return _recipe.PictureUrl; }
@@ -30,19 +33,20 @@ namespace MMFoodDesktopUI.ViewModels
             }
         }
         
-        public BindingList<IngredientModel> Ingredients 
+        public BindingList<RecipeIngredientModel> RecipeIngredients 
         {
             get
             {
-                BindingList<IngredientModel> output = new BindingList<IngredientModel>(_recipe.Ingredients);                
+                BindingList<RecipeIngredientModel> output = new BindingList<RecipeIngredientModel>(_recipe.RecipeIngredients);                
                 return output ;
             }
             set
             {
                 foreach(var i in value)
                 {
-                    _recipe.Ingredients.Add(i);
-                    NotifyOfPropertyChange(() => Ingredients);
+                    _recipe.RecipeIngredients.Add(i);
+                    NotifyOfPropertyChange(() => RecipeIngredients);
+                    NotifyOfPropertyChange(() => SelectedIngredient);
                 }
             }
         }
@@ -74,9 +78,7 @@ namespace MMFoodDesktopUI.ViewModels
                 _categories = value;
                 NotifyOfPropertyChange(() => Categories);
             }
-        }
-
-        private CategoryModel _selectedCategory;
+        }        
 
         public CategoryModel SelectedCategory
             
@@ -90,75 +92,48 @@ namespace MMFoodDesktopUI.ViewModels
                 _selectedCategory = value;
                 NotifyOfPropertyChange(() => SelectedCategory);
             }
-        }       
+        }              
 
+        public IngredientModel SelectedIngredient
+        {
+            get 
+            { 
+                return _selectedIngredient;
+            }
+            set 
+            { 
+                _selectedIngredient = value;
+                NotifyOfPropertyChange(() => SelectedIngredient);
+            }
+        }
 
-        public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint)
+        private BindingList<IngredientModel> _searchIngredientResult;
+        public BindingList<IngredientModel> SearchIngredientResult
+        {
+            get { return _searchIngredientResult; }
+            set { _searchIngredientResult = value; }
+        }
+
+        public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint, IIngredientEndPoint ingredientEndPoint)
         {            
             _categoryEndPoint = categoryEndPoint;
             _recipeEndpoint = recipeEndpoint;
+            _ingredientEndPoint = ingredientEndPoint;
 
             _recipe = new RecipeModel();
-            _recipe.Ingredients = new List<IngredientModel>();
+            _recipe.RecipeIngredients = new List<RecipeIngredientModel>();
             _recipe.Steps = new List<RecipeStepModel>();
         }
 
         protected override async void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            await LoadCategories();
+            //await LoadCategories();
         }
-
-        private async Task LoadCategories()
+        private async void SearchForIngredients(string name)
         {
-            var categoryList = await _categoryEndPoint.GetAll();
-            Categories = new BindingList<CategoryModel>(categoryList);
+            SearchIngredientResult = new BindingList<IngredientModel>( await _ingredientEndPoint.GetFirstTenIngredients(SelectedIngredient.Name));            
         }
-
-        private async Task SaveRecipe(RecipeModel recipe)
-        {
-            //if (ValidateRecipe(recipe))
-            if (true)
-            {
-                await _recipeEndpoint.PostRecipe(_recipe);
-            }
-        }
-        private bool CanPublish(RecipeModel recipe)
-        {
-            var output = true;
-
-            if (recipe.Ingredients == null)
-                output = false;
-            if (recipe.Ingredients.Count == 0)
-                output = false;
-
-            if (recipe.Title == null)
-                output = false;
-            if (recipe.Title == "")
-                output = false;
-
-            if (recipe.Description == null)
-                output = false;
-            if (recipe.Description == "")
-                output = false;
-
-            if (recipe.Steps == null)
-                output = false;
-            if (recipe.Steps.Count == 0)
-                output = false;
-
-            if (PictureUrlCheck(PictureUrl))
-                output = false;
-
-            return output;
-        }
-
-        private bool CanSave(RecipeModel recipe)
-        {
-            bool output = true;
-            return output;
-        }
-
         private bool PictureUrlCheck(string url)
         {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("url");
@@ -173,23 +148,59 @@ namespace MMFoodDesktopUI.ViewModels
             {
                 return false;
             }
-        }        
-
-        public void PublishRecipe()
-        {
-
         }
+        private async Task LoadCategories()
+        {
+            var categoryList = await _categoryEndPoint.GetAll();
+            Categories = new BindingList<CategoryModel>(categoryList);
+        }
+        public async Task SaveRecipe()
+        {
+            await SaveTestRecipe();
+        }
+        public async Task SaveTestRecipe()
+        {
+            _recipe = new RecipeModel();
+            _recipe.Title = "Test Recipe";
+            _recipe.Description = "Test Description";
+            _recipe.PictureUrl = "Test PictureUrl";
+            _recipe.Category = new CategoryModel
+            {
+                Name = "Test Recipe Category",
+                Description = "Test Recipe Category Description",
+                PictureUrl="Test Recipe Category PictureUrl"
+            };
+            _recipe.RecipeIngredients = new List<RecipeIngredientModel>();
+            _recipe.RecipeIngredients.Add(new RecipeIngredientModel
+            {
+                Ingredient = new IngredientModel
+                {
+                    Name = "Test Ingredient",
+                    Description = "Test Ingredient Description",
+                    Category = new IngredientCategoryModel
+                    {
+                        Name = "Test Ingredient Category"
+                    }
+                },
 
+                Quantity = 10,
+                Unit = "Kg"
+            });
+            _recipe.Steps = new List<RecipeStepModel>();
+            _recipe.Steps.Add(new RecipeStepModel { Title = "TestStep", Number = 1 , Details="Test Step Details"});
+
+            await _recipeEndpoint.PostRecipe(_recipe);
+        }        
         public void AddIngredientToRecipe()
         {
-            var output = new IngredientModel();
+            var output = new RecipeIngredientModel();
+            output.Ingredient = new IngredientModel();
             //output.Name = "";
             //output.Quantity = "";
 
-            Ingredients.Add(output);
-            NotifyOfPropertyChange(() =>Ingredients);
+            RecipeIngredients.Add(output);
+            NotifyOfPropertyChange(() =>RecipeIngredients);
         }
-
         public void AddStepToRecipe()
         {
             var output = new RecipeStepModel();

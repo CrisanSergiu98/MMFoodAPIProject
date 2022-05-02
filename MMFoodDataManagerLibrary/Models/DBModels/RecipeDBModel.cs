@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace MMFoodDataManagerLibrary.Models
 {
-    public class IngredientDBModel
+    public class RecipeDBModel 
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
         public int CategoryId { get; set; }
+        public int QuisineId { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
         public string PictureUrl { get; set; }
-
+        public DateTime CreateDate { get; set; }
+        public bool IPublished { get; set; }          
     }
 }

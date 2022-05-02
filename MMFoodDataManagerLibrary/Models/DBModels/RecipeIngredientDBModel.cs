@@ -12,6 +12,7 @@ namespace MMFoodDataManagerLibrary.Models
         public int RecipeId { get; set; }
         public int IngredientId { get; set; }
         public float Quantity { get; set; }
-        public int UnitId { get; set; }
+        public string Unit { get; set; }
+        public bool IsRequired { get; set; }
     }
 }

@@ -52,6 +52,8 @@
     <Compile Include="Api\CategoryEndPoint.cs" />
     <Compile Include="Api\IAPIHelper.cs" />
     <Compile Include="Api\ICategoryEndPoint.cs" />
+    <Compile Include="Api\IIngredientEndPoint.cs" />
+    <Compile Include="Api\IngredientEndPoint.cs" />
     <Compile Include="Api\IRecipeEndPoint.cs" />
     <Compile Include="Api\RecipeEndPoint.cs" />
     <Compile Include="Models\AuthenticatedUser.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Models\IngredientCategoryModel.cs" />
     <Compile Include="Models\IngredientModel.cs" />
     <Compile Include="Models\LoggedInUserModel.cs" />
+    <Compile Include="Models\RecipeIngredientModel.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\RecipeStepModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -141,9 +141,9 @@
                         Style="{StaticResource DefaultTitle}"/>
             <Separator/>     
             <!--Ingredients List-->
-            <ListBox ItemsSource="{Binding Path = Ingredients, Mode=TwoWay}"
-                        FontSize="20"
-                        >
+            <ListBox ItemsSource="{Binding Path = RecipeIngredients, Mode=TwoWay}"
+                     FontSize="20"
+                     SelectedItem="{Binding Path=SelectedIngredient}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <DockPanel HorizontalAlignment="Left"
@@ -152,9 +152,10 @@
                                 <TextBlock Text="Ingredient:"
                                         Margin="5"
                                         VerticalAlignment="Center"/>
-                        <ComboBox SelectedItem="{Binding Path = Name}"
-                                        Text="{Binding Path = Name}"
-                                        ItemsSource="{Binding Path = GetFirstTenMatching}"
+                            
+                        <ComboBox SelectedItem="{Binding Path = Ingredient.Name}"
+                                        Text="{Binding Path = Ingredient.Name}"
+                                        ItemsSource="{Binding Path = SearchIngredientResult}"
                                         IsEditable="True"
                                         IsTextSearchEnabled="True"
                                         Background="Transparent"
@@ -178,9 +179,8 @@
                                         Margin="5"
                                         VerticalAlignment="Center"/>
                         
-                            <ComboBox SelectedItem="{Binding Unit.Name}"
-                                        Text="{Binding Unit.Name}"
-                                        ItemsSource="{Binding Unit.SearchResults}"
+                            <ComboBox SelectedItem="{Binding Path =Unit }"
+                                        Text="{Binding Path =Unit}"
                                         IsEditable="True"
                                         IsTextSearchEnabled="True"
                                         Background="Transparent"

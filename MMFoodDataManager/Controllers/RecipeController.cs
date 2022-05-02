@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using MMFoodDataManagerLibrary.DataAccess;
+using MMFoodDataManagerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,9 +13,12 @@ namespace MMFoodDataManager.Controllers
     [Authorize]
     public class RecipeController : ApiController
     {
-        public void Post()
+        public void Post(RecipeModel recipe)
         {
-            Console.WriteLine();
+            RecipeData data = new RecipeData();
+            string userId = RequestContext.Principal.Identity.GetUserId();
+
+            data.SaveRecipe(recipe, userId);
         }
     }
 }

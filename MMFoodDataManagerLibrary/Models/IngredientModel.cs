@@ -3,6 +3,8 @@
     public class IngredientModel
     {
         public string Name { get; set; }
-        public CategoryModel Category { get; set; }
+        public string Description { get; set; }
+        public string PictureUrl { get; set; }
+        public IngredientCategoryDBModel Category { get; set; }
     }
 }

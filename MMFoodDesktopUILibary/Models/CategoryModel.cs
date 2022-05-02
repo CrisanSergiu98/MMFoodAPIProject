@@ -10,6 +10,6 @@ namespace MMFoodDesktopUILibrary.Models
     {        
         public string Name { get; set; }
         public string Description { get; set; }
-        public string PictureURL { get; set; }
+        public string PictureUrl { get; set; }
     }
 }

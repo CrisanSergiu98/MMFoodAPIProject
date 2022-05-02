@@ -10,38 +10,105 @@ namespace MMFoodDataManagerLibrary.DataAccess
 {
     public class IngredientData
     {
-        public IngredientDBModel SaveIngredient(IngredientModel ingredient)
+        SQLDataAccess sql;
+        public IngredientData()
         {
-            IngredientDBModel ingredientDB = new IngredientDBModel();
+            sql = new SQLDataAccess();
+        }
+        //public IngredientDBModel SaveIngredient(IngredientModel ingredient, string userId)
+        //{
+        //    SQLDataAccess sql = new SQLDataAccess();
+        //    IngredientCategoryData ingredientCategoryData = new IngredientCategoryData();
 
+        //    IngredientDBModel toSaveIngredient = new IngredientDBModel();            
+
+        //    toSaveIngredient.Name = ingredient.Name;
+        //    toSaveIngredient.Description = ingredient.Description;
+        //    toSaveIngredient.PictureUrl = ingredient.PictureUrl;
+        //    toSaveIngredient.UserId = userId;
+        //    toSaveIngredient.IsPublished = ingredient.IsPublished;
+
+        //    if (toSaveIngredient.IsPublished)
+        //    {
+        //        try
+        //        {
+        //            toSaveIngredient = GetById(toSaveIngredient.Id);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            string message = e.Message;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            toSaveIngredient.Id = Lookup(toSaveIngredient);
+        //        }
+        //        catch
+        //        {
+        //            toSaveIngredient.IsPublished = false;
+
+        //            try
+        //            {
+        //                toSaveIngredient.Id = Lookup(toSaveIngredient);
+        //            }
+        //            catch
+        //            {
+        //                try
+        //                {
+        //                    sql.SaveData("dbo.spIngredientCategory_Insert", toSaveIngredient, "MMFoodData");
+        //                    toSaveIngredient.Id = Lookup(toSaveIngredient);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    string message = e.Message;
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    //try
+        //    //{
+        //    //    toSaveIngredient = GetIngredientByName(ingredient.Name);                
+        //    //}
+        //    //catch
+        //    //{
+        //    //    toSaveIngredient.IsPublished = false;
+
+        //    //    toSaveIngredient.CategoryId = ingredientCategoryData.SaveCategory(ingredient.Category, userId).Id;
+
+        //    //    sql.SaveData("dbo.spIngredient_Insert", toSaveIngredient, "MMFoodData");
+
+        //    //    toSaveIngredient.Id = Lookup(toSaveIngredient.Name, toSaveIngredient.IsPublished);
+        //    //}
+
+        //    return toSaveIngredient;
+        //}                
+        public int Lookup(string name)
+        {   
+            return sql.LoadData<int, dynamic>("dbo.spIngredient_Lookup", new{ Name = name }, "MMFoodData").FirstOrDefault();
+        }
+        public IngredientDBModel GetById(int id)
+        {    
             try
             {
-                ingredientDB = GetIngredientByName(ingredient.Name);
+                return sql.LoadData<IngredientDBModel, dynamic>("dbo.spIngredient_GetById", new
+                {
+                    Id = id
+                }, "MMFoodData").FirstOrDefault();
             }
             catch
             {
-
+                throw new Exception();
             }
-
-            return ingredientDB;
         }
-
-        public List<IngredientDBModel> GetAllIngredients()
+        public List<IngredientDBModel> SearchByName(string name)
         {
-            SQLDataAccess sql = new SQLDataAccess();
-
-            var output = sql.LoadData<IngredientDBModel, dynamic>("dbo.spIngredient_GetAll", new { }, "MMFoodData");
-
-            return output;
-        }
-
-        public IngredientDBModel GetIngredientByName(string name)
-        {
-            SQLDataAccess sql = new SQLDataAccess();
-
-            var output = sql.LoadData<IngredientDBModel, dynamic>("dbo.spIngredient_GetByName", new { }, "MMFoodData").FirstOrDefault();
-
-            return output;
+            return sql.LoadData<IngredientDBModel, dynamic>("dbo.spIngredient_SearchByName", new
+            {
+                Name = name
+            }, "MMFoodData");
         }
     }
 }
