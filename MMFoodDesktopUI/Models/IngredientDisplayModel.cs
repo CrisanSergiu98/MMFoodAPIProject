@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using MMFoodDesktopUILibrary.Models;
 
 namespace MMFoodDesktopUI.Models
 {
@@ -23,7 +24,7 @@ namespace MMFoodDesktopUI.Models
 
         public string Description { get; set; }
         public string PictureUrl { get; set; }
-        public IngredientCategoryDisplayModel Category { get; set; }
+        public IngredientCategoryModel Category { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void CallPropertyChanged(string propertyName)

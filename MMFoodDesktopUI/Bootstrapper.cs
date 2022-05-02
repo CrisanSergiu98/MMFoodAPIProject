@@ -10,7 +10,9 @@ using MMFoodDesktopUI.ViewModels;
 using MMFoodDesktopUILibary.Api;
 using MMFoodDesktopUILibary.Models;
 using MMFoodDesktopUILibrary.Api;
-
+using AutoMapper;
+using MMFoodDesktopUILibrary.Models;
+using MMFoodDesktopUI.Models;
 
 namespace MMFoodDesktopUI
 {
@@ -39,6 +41,15 @@ namespace MMFoodDesktopUI
         /// </summary>
         protected override void Configure()
         {
+            var config = new MapperConfiguration(cfg =>
+            {
+                 cfg.CreateMap<IngredientModel, IngredientDisplayModel>();
+            });
+
+            var mapper = config.CreateMapper();
+
+            _container.Instance(mapper);
+
             _container.Instance(_container)
                 .PerRequest<ICategoryEndPoint, CategoryEndPoint>()
                 .PerRequest<IRecipeEndPoint, RecipeEndPoint>()
