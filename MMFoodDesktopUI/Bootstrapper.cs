@@ -1,14 +1,15 @@
 ﻿using Caliburn.Micro;
-using MMFoodDesktopUI.Helper;
-using MMFoodDesktopUI.ViewModels;
-using MMFoodDesktopUILibary.Api;
-using MMFoodDesktopUILibary.Models;
-using MMFoodDesktopUILibrary.Api;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using MMFoodDesktopUI.Helper;
+using MMFoodDesktopUI.ViewModels;
+using MMFoodDesktopUILibary.Api;
+using MMFoodDesktopUILibary.Models;
+using MMFoodDesktopUILibrary.Api;
 
 
 namespace MMFoodDesktopUI
@@ -69,6 +70,7 @@ namespace MMFoodDesktopUI
             DisplayRootViewFor<ShellViewModel>();
             //DisplayRootViewFor<CreateRecipeViewModel>();
         }
+        
 
         /// <summary>
         /// Override the GetIsntance from Bootstrapper to use our Caliburn.Micro DI Container.
