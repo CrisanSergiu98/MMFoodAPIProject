@@ -33,5 +33,20 @@ namespace MMFoodDesktopUILibary.Api
                 }
             }
         }
+        public async Task<List<CategoryModel>> SearchByName(string name)
+        {
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"api/Category/{name}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<List<CategoryModel>>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
     }
 }

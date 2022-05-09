@@ -8,5 +8,6 @@ namespace MMFoodDesktopUILibary.Api
     public interface ICategoryEndPoint
     {
         Task<List<CategoryModel>> GetAll();
+        Task<List<CategoryModel>> SearchByName(string name);
     }
 }

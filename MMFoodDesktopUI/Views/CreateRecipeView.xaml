@@ -8,16 +8,16 @@
     <UserControl.Resources>
         <!--Base ComboBox Style-->
         <Style TargetType="ComboBoxItem">
-            
+
         </Style>
-        
+
         <!--Base Listbox Style-->
         <Style TargetType="ListBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="FontFamily" Value="Segoe UI Light"/>
         </Style>
-        
+
         <!--Base Button Style-->
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Segoe UI Light"/>
@@ -26,9 +26,9 @@
             <Setter Property="Padding" Value="10,5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="MinHeight" Value="10"/>
-            
+
         </Style>
-        
+
         <!--ActionButtonsStyle-->
         <Style BasedOn="{StaticResource {x:Type Button}}"
                x:Key="ActionButton"
@@ -52,7 +52,7 @@
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        
+
         <!--Title TextBox-->
         <Style x:Key="DefaultTitleBox"
                TargetType="TextBox"
@@ -60,14 +60,14 @@
             <Setter Property="FontSize" Value="50"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
-        
+
         <!--Recipe Title Style-->
         <Style  x:Key="RecipeTytleStyle"
                 TargetType="TextBox"             
                 BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="FontSize" Value="50"/>            
+            <Setter Property="FontSize" Value="50"/>
         </Style>
-        
+
         <!--Descritption TextBox Style-->
         <Style x:Key="DescriptionBox"
                TargetType="TextBox"               
@@ -79,7 +79,7 @@
     <ScrollViewer>
         <StackPanel Margin="20"
                     Orientation="Vertical">
-            
+
             <!--Title + Picture-->
             <StackPanel Orientation="Horizontal">
                 <!--Picture-->
@@ -94,10 +94,10 @@
 
             </StackPanel>
             <Separator/>
-            
+
             <!--Picture URL-->
             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                    
+
                 <TextBlock Text="Pic URL:"
                             Margin="0,0,5,0"
                             />
@@ -105,14 +105,15 @@
                             MinWidth="150"
                             MaxWidth="400"/>
             </StackPanel>
-                
+
             <!--Category Senction-->
             <StackPanel Orientation="Horizontal">
-                    
+
                 <TextBlock Text="Category"
                             Style="{StaticResource DefaultTitle}"/>
-                <ComboBox ItemsSource="{Binding Path = Categories}"
-                          SelectedItem="{Binding Path = SelectedCategory}"
+                <ComboBox ItemsSource="{Binding Path = CategorySearchResult}"
+                          SelectedItem="{Binding Path = SelectedCategory, Mode=TwoWay}"
+                          Text="{Binding Path=SelectedCategory.Name, Mode=TwoWay}"
                           DisplayMemberPath="Name"
                           MinWidth="100"
                           Margin="5"
@@ -120,26 +121,26 @@
                           IsTextSearchEnabled="True"
                           IsEditable="True"
                           />
-                
+
             </StackPanel>
             <Separator/>
 
             <!--Description Senction Title-->
             <TextBlock Text="Description"
                         Style="{StaticResource DefaultTitle}"/>
-            <Separator/>                
-                
+            <Separator/>
+
             <!--Description Box-->
             <TextBox Grid.Column="1"
                         Grid.Row="8"
                         Text="A short escription of your recipe."
                         Style="{StaticResource DescriptionBox}"
                         />
-        
+
             <!--Ingredients section-->
             <TextBlock Text="Ingredients"
                         Style="{StaticResource DefaultTitle}"/>
-            <Separator/>     
+            <Separator/>
             <!--Ingredients List-->
             <ListBox ItemsSource="{Binding Path = RecipeIngredients, Mode=TwoWay}"
                      FontSize="20"
@@ -149,11 +150,11 @@
                         <DockPanel HorizontalAlignment="Left"
                                     MinHeight="10"
                                     >
-                                <TextBlock Text="Ingredient:"
+                            <TextBlock Text="Ingredient:"
                                         Margin="5"
                                         VerticalAlignment="Center"/>
-                            
-                        <ComboBox SelectedItem="{Binding Path = Ingredient.Name}"
+
+                            <ComboBox SelectedItem="{Binding Path = Ingredient.Name}"
                                         Text="{Binding Path = Ingredient.Name}"
                                         ItemsSource="{Binding Path = SearchIngredientResult}"
                                         IsEditable="True"
@@ -165,7 +166,7 @@
                                         VerticalContentAlignment="Center"
                                         Width="150"
                                         />
-                        <TextBlock Text="Qty:"
+                            <TextBlock Text="Qty:"
                                         Margin="5"
                                         VerticalAlignment="Center"
                                         />
@@ -178,7 +179,7 @@
                             <TextBlock Text="Unit:"
                                         Margin="5"
                                         VerticalAlignment="Center"/>
-                        
+
                             <ComboBox SelectedItem="{Binding Path =Unit }"
                                         Text="{Binding Path =Unit}"
                                         IsEditable="True"
@@ -200,10 +201,10 @@
                     HorizontalAlignment="Left"
                     Content="+"/>
 
-                <!--Steps Section Title-->
+            <!--Steps Section Title-->
             <TextBlock Text="Steps"
                         Style="{StaticResource DefaultTitle}"/>
-            <Separator/>     
+            <Separator/>
             <!--Step List-->
             <ListBox ItemsSource="{Binding Path=Steps}"
                         FontSize="20"
@@ -212,35 +213,35 @@
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                            
+
                                 <TextBlock Text="{Binding Path =StepNumber }"
                                             Style="{StaticResource DefaultTitle}"
                                             FontSize="20"/>
-                            
-                                    <TextBox Text="{Binding Title}"
+
+                                <TextBox Text="{Binding Title}"
                                                 Style="{StaticResource DefaultTitleBox}"
                                                 FontSize="20"/>
-                                </StackPanel>
+                            </StackPanel>
                             <TextBox Text="{Binding Path= Details}"
                                         FontSize="15"/>
-                        </StackPanel>                    
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        
+
             <!--Add New Step Button-->
             <Button x:Name="addStepToRecipe"
                     HorizontalAlignment="Left"
-                    Content="+"/> 
-            
+                    Content="+"/>
+
             <!--Action Section-->
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="SaveRecipe"
                         Content="Save"
-                        Style="{StaticResource ActionButton}"/>                
+                        Style="{StaticResource ActionButton}"/>
                 <Button Content="Clear'n'Exit"
                         Style="{StaticResource ActionButton}"/>
-            </StackPanel>    
-         </StackPanel>        
+            </StackPanel>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -9,131 +9,104 @@ using MMFoodDesktopUILibrary.Api;
 using MMFoodDesktopUILibary.Api;
 using System.Net;
 using MMFoodDesktopUILibrary.Models;
+using AutoMapper;
+using MMFoodDesktopUI.Models;
 
 namespace MMFoodDesktopUI.ViewModels
 {
     public class CreateRecipeViewModel: Screen
     {
+        #region Dependency Injection Backing Fields
+
         private ICategoryEndPoint _categoryEndPoint;
         private IRecipeEndPoint _recipeEndpoint;
         private IIngredientEndPoint _ingredientEndPoint;
+        private IMapper _mapper;
 
-        private IngredientModel _selectedIngredient;
-        private RecipeModel _recipe;
-        private BindingList<CategoryModel> _categories;
-        private CategoryModel _selectedCategory;
+        #endregion
 
-        public string PictureUrl
+        #region Backing Fields
+        
+        private CategoryDisplayModel _selectedCategory;
+        private BindingList<RecipeIngredientDisplayModel> _recipeIngredients;
+        private BindingList<RecipeStepModel> _steps;
+
+        #endregion
+
+        #region Properties
+
+        public BindingList<RecipeIngredientDisplayModel> RecipeIngredients
         {
-            get { return _recipe.PictureUrl; }
+            get { return _recipeIngredients; }
             set
             {
-                _recipe.PictureUrl = value;
-                NotifyOfPropertyChange(() => PictureUrl);
+                _recipeIngredients = value;
+                NotifyOfPropertyChange(() => RecipeIngredients);
             }
         }
-        
-        public BindingList<RecipeIngredientModel> RecipeIngredients 
-        {
-            get
-            {
-                BindingList<RecipeIngredientModel> output = new BindingList<RecipeIngredientModel>(_recipe.RecipeIngredients);                
-                return output ;
-            }
-            set
-            {
-                foreach(var i in value)
-                {
-                    _recipe.RecipeIngredients.Add(i);
-                    NotifyOfPropertyChange(() => RecipeIngredients);
-                    NotifyOfPropertyChange(() => SelectedIngredient);
-                }
-            }
-        }
-        
+
         public BindingList<RecipeStepModel> Steps
         {
+            get { return _steps; }
+            set
+            {
+                _steps = value;
+                NotifyOfPropertyChange(() => Steps);
+            }
+        }
+
+        public BindingList<CategoryDisplayModel> CategorySearchResult
+        {
             get
             {
-                BindingList<RecipeStepModel> output = new BindingList<RecipeStepModel>(_recipe.Steps);
-                return output;
-            }
-            set
-            {
-                foreach (var i in value)
-                {
-                    _recipe.Steps.Add(i);
-                }
-            }
-        }
-        
-        public BindingList<CategoryModel> Categories
-        {
-            get 
-            {
-                return _categories;
-            }
-            set
-            {
-                _categories = value;
-                NotifyOfPropertyChange(() => Categories);
-            }
-        }        
+                //Needs fixing
+                var searchResult = _categoryEndPoint.SearchByName(SelectedCategory.Name);
 
-        public CategoryModel SelectedCategory
-            
+                var result = _mapper.Map<List<CategoryDisplayModel>>(searchResult);
+
+                return new BindingList<CategoryDisplayModel>(result);                
+            }            
+        }
+
+        public CategoryDisplayModel SelectedCategory
         {
-            get 
-            { 
+            get
+            {
                 return _selectedCategory;
             }
-            set 
-            { 
+            set
+            {
                 _selectedCategory = value;
                 NotifyOfPropertyChange(() => SelectedCategory);
-            }
-        }              
-
-        public IngredientModel SelectedIngredient
-        {
-            get 
-            { 
-                return _selectedIngredient;
-            }
-            set 
-            { 
-                _selectedIngredient = value;
-                NotifyOfPropertyChange(() => SelectedIngredient);
+                NotifyOfPropertyChange(() => CategorySearchResult);
             }
         }
 
-        private BindingList<IngredientModel> _searchIngredientResult;
-        public BindingList<IngredientModel> SearchIngredientResult
-        {
-            get { return _searchIngredientResult; }
-            set { _searchIngredientResult = value; }
-        }
+        #endregion
 
-        public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint, IIngredientEndPoint ingredientEndPoint)
+        public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint, 
+            IIngredientEndPoint ingredientEndPoint, IMapper mapper)
         {            
             _categoryEndPoint = categoryEndPoint;
             _recipeEndpoint = recipeEndpoint;
             _ingredientEndPoint = ingredientEndPoint;
+            _mapper = mapper;
 
-            _recipe = new RecipeModel();
-            _recipe.RecipeIngredients = new List<RecipeIngredientModel>();
-            _recipe.Steps = new List<RecipeStepModel>();
+            RecipeIngredients = new BindingList<RecipeIngredientDisplayModel>();
+            SelectedCategory = new CategoryDisplayModel();
         }
 
+        #region Override
         protected override async void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
             //await LoadCategories();
         }
-        private async void SearchForIngredients(string name)
-        {
-            SearchIngredientResult = new BindingList<IngredientModel>( await _ingredientEndPoint.GetFirstTenIngredients(SelectedIngredient.Name));            
-        }
+
+        #endregion
+
+        #region Private Methods
+
         private bool PictureUrlCheck(string url)
         {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("url");
@@ -149,57 +122,21 @@ namespace MMFoodDesktopUI.ViewModels
                 return false;
             }
         }
-        private async Task LoadCategories()
-        {
-            var categoryList = await _categoryEndPoint.GetAll();
-            Categories = new BindingList<CategoryModel>(categoryList);
-        }
-        public async Task SaveRecipe()
-        {
-            await SaveTestRecipe();
-        }
-        public async Task SaveTestRecipe()
-        {
-            _recipe = new RecipeModel();
-            _recipe.Title = "Test Recipe";
-            _recipe.Description = "Test Description";
-            _recipe.PictureUrl = "Test PictureUrl";
-            _recipe.Category = new CategoryModel
-            {
-                Name = "Test Recipe Category",
-                Description = "Test Recipe Category Description",
-                PictureUrl="Test Recipe Category PictureUrl"
-            };
-            _recipe.RecipeIngredients = new List<RecipeIngredientModel>();
-            _recipe.RecipeIngredients.Add(new RecipeIngredientModel
-            {
-                Ingredient = new IngredientModel
-                {
-                    Name = "Test Ingredient",
-                    Description = "Test Ingredient Description",
-                    Category = new IngredientCategoryModel
-                    {
-                        Name = "Test Ingredient Category"
-                    }
-                },
 
-                Quantity = 10,
-                Unit = "Kg"
-            });
-            _recipe.Steps = new List<RecipeStepModel>();
-            _recipe.Steps.Add(new RecipeStepModel { Title = "TestStep", Number = 1 , Details="Test Step Details"});
 
-            await _recipeEndpoint.PostRecipe(_recipe);
-        }        
+        #endregion
+
+        #region Public Methods
+
         public void AddIngredientToRecipe()
         {
-            var output = new RecipeIngredientModel();
-            output.Ingredient = new IngredientModel();
+            var output = new RecipeIngredientDisplayModel();
+            output.Ingredient = new IngredientDisplayModel();
             //output.Name = "";
             //output.Quantity = "";
 
             RecipeIngredients.Add(output);
-            NotifyOfPropertyChange(() =>RecipeIngredients);
+            NotifyOfPropertyChange(() => RecipeIngredients);
         }
         public void AddStepToRecipe()
         {
@@ -212,7 +149,11 @@ namespace MMFoodDesktopUI.ViewModels
             Steps.Add(output);
             NotifyOfPropertyChange(() => Steps);
         }
+        public async Task SaveRecipe()
+        {
+            //
+        }
 
-        
+        #endregion
     }
 }

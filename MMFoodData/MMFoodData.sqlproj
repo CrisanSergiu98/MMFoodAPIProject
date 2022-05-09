@@ -89,6 +89,7 @@
     <Build Include="dbo\Stored Procedures\spStep_Insert.sql" />
     <Build Include="dbo\Tables\Quisine.sql" />
     <Build Include="dbo\Stored Procedures\spIngredient_SearchByName.sql" />
+    <Build Include="dbo\Stored Procedures\spCategory_SearchByName.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MMFoodData.refactorlog" />

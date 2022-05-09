@@ -13,13 +13,22 @@ namespace MMFoodDataManager.Controllers
     [Authorize]
     public class CategoryController : ApiController
     {
-        public List<CategoryDBModel> Get()
+        //public List<CategoryDBModel> Get()
+        //{
+        //    //string userId = RequestContext.Principal.Identity.GetUserId();
+
+        //    CategoryData data = new CategoryData();
+
+        //    return data.GetAllCategories();
+        //}
+
+        public List<CategoryDBModel> Get(string name)
         {
             //string userId = RequestContext.Principal.Identity.GetUserId();
 
             CategoryData data = new CategoryData();
 
-            return data.GetAllCategories();
+            return data.SearchByName(name);
         }
     }
 }
