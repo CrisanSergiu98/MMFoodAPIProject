@@ -93,7 +93,7 @@ namespace MMFoodDesktopUI.ViewModels
             _mapper = mapper;
 
             RecipeIngredients = new BindingList<RecipeIngredientDisplayModel>();
-            SelectedCategory = new CategoryDisplayModel();
+            SelectedCategory = new CategoryDisplayModel(_categoryEndPoint, _mapper);
         }
 
         #region Override

@@ -5,6 +5,7 @@ begin
 	set nocount on;
 	select *
 	from dbo.RecipeCategory
-	--where [Name] like '%' + @Name + '%';
+	where [Name] like '%' + @Name + '%';
+	--where [Name] = @Name;
 end
 

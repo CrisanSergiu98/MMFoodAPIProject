@@ -55,10 +55,16 @@ namespace MMFoodDataManagerLibrary.DataAccess
         public List<CategoryDBModel> SearchByName(string name)
         {
             SQLDataAccess sql = new SQLDataAccess();
-            return sql.LoadData<CategoryDBModel, dynamic>("dbo.spCategory_SearchByName", new
+
+            List<CategoryDBModel> output = new List<CategoryDBModel>();
+
+
+            output = sql.LoadData<CategoryDBModel, dynamic>("dbo.spCategory_SearchByName", new
             {
                 Name = name
             }, "MMFoodData");
+
+            return output;
         }
     }
 }
