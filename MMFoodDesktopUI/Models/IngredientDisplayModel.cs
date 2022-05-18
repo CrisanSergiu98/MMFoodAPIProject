@@ -8,7 +8,7 @@ using MMFoodDesktopUILibrary.Models;
 
 namespace MMFoodDesktopUI.Models
 {
-    public class IngredientDisplayModel:INotifyPropertyChanged
+    public class IngredientDisplayModel: INotifyPropertyChanged
     {
         private string _name = "";
 

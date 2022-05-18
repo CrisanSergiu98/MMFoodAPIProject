@@ -16,7 +16,7 @@ namespace MMFoodDesktopUI.ViewModels
 {
     public class CreateRecipeViewModel: Screen
     {
-        #region Dependency Injection Backing Fields
+        #region Dependency Injection
 
         private ICategoryEndPoint _categoryEndPoint;
         private IRecipeEndPoint _recipeEndpoint;
@@ -31,6 +31,10 @@ namespace MMFoodDesktopUI.ViewModels
         private BindingList<RecipeIngredientDisplayModel> _recipeIngredients;
         private BindingList<RecipeStepModel> _steps;
         private BindingList<CategoryDisplayModel> _categorySearchResult;
+        private BindingList<IngredientDisplayModel> _ingredientSearchResult;
+        private RecipeIngredientDisplayModel _selectedIngredient;
+        private IngredientDisplayModel _toAddIngredient;
+        private RecipeIngredientDisplayModel _toAddRecipeIngredient;
 
         #endregion
 
@@ -68,6 +72,18 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CategorySearchResult);
             }
         }
+        
+
+        public BindingList<IngredientDisplayModel> IngredientSearchResult
+        {
+            get { return _ingredientSearchResult; }
+            set 
+            {
+                _ingredientSearchResult = value;
+                NotifyOfPropertyChange(() => IngredientSearchResult);
+            }
+        }
+
 
         public CategoryDisplayModel SelectedCategory
         {
@@ -82,12 +98,53 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CategorySearchResult);
             }
         }
+        
+
+        public RecipeIngredientDisplayModel SelectedIngredient
+        {
+            get { return _selectedIngredient; }
+            set 
+            { 
+                _selectedIngredient = value;
+                NotifyOfPropertyChange(() => SelectedIngredient);
+                NotifyOfPropertyChange(() => IngredientSearchResult);
+            }
+        }
+
+        
+
+        public IngredientDisplayModel ToAddIngredient
+        {
+            get { return _toAddIngredient; }
+            set 
+            {
+                _toAddIngredient = value;
+                NotifyOfPropertyChange(() => ToAddIngredient);
+            }
+        }
+
+        
+
+        public RecipeIngredientDisplayModel ToAddRecipeIngredient
+        {
+            get { return _toAddRecipeIngredient; }
+            set
+            {
+                _toAddRecipeIngredient = value;
+                NotifyOfPropertyChange(() => ToAddRecipeIngredient);
+            }
+        }
+
+
+
 
         #endregion
 
-        public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint, 
+        #region Constructor()
+
+        public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint,
             IIngredientEndPoint ingredientEndPoint, IMapper mapper)
-        {            
+        {
             _categoryEndPoint = categoryEndPoint;
             _recipeEndpoint = recipeEndpoint;
             _ingredientEndPoint = ingredientEndPoint;
@@ -95,9 +152,58 @@ namespace MMFoodDesktopUI.ViewModels
 
             RecipeIngredients = new BindingList<RecipeIngredientDisplayModel>();
             SelectedCategory = new CategoryDisplayModel();
+            SelectedIngredient = new RecipeIngredientDisplayModel(_ingredientEndPoint);
+            SelectedIngredient.Ingredient = new IngredientDisplayModel();
+
             CategorySearchResult = new BindingList<CategoryDisplayModel>();
+            IngredientSearchResult = new BindingList<IngredientDisplayModel>();
+            ToAddIngredient = new IngredientDisplayModel();
 
             SelectedCategory.PropertyChanged += SelectedCategory_PropertyChanged;
+            ToAddIngredient.PropertyChanged += ToAddIngredient_PropertyChanged;
+            SelectedIngredient.Ingredient.PropertyChanged += Ingredient_PropertyChanged;
+        }
+
+        #endregion
+
+        #region Events
+
+        private async void ToAddIngredient_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var searchResult = await _ingredientEndPoint.SearchByName(ToAddIngredient.Name);
+
+            List<IngredientDisplayModel> result = new List<IngredientDisplayModel>();
+
+            foreach (var i in searchResult)
+            {
+                result.Add(new IngredientDisplayModel
+                {
+                    Name = i.Name,
+                    PictureUrl = i.PictureUrl,
+                    Description = i.Description
+                });
+            }
+
+            IngredientSearchResult = new BindingList<IngredientDisplayModel>(result);
+        }
+
+        private async void Ingredient_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var searchResult = await _ingredientEndPoint.SearchByName(SelectedIngredient.Ingredient.Name);
+
+            List<IngredientDisplayModel> result = new List<IngredientDisplayModel>();
+
+            foreach (var i in searchResult)
+            {
+                result.Add(new IngredientDisplayModel
+                {
+                    Name = i.Name,
+                    PictureUrl = i.PictureUrl,
+                    Description = i.Description
+                });
+            }
+
+            IngredientSearchResult = new BindingList<IngredientDisplayModel>(result);
         }
 
         private async void SelectedCategory_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -109,7 +215,7 @@ namespace MMFoodDesktopUI.ViewModels
             //var result = _mapper.Map<List<CategoryDisplayModel>>(searchResult);
             List<CategoryDisplayModel> result = new List<CategoryDisplayModel>();
 
-            foreach(var i in searchResult)
+            foreach (var i in searchResult)
             {
                 result.Add(new CategoryDisplayModel
                 {
@@ -122,6 +228,8 @@ namespace MMFoodDesktopUI.ViewModels
             CategorySearchResult = new BindingList<CategoryDisplayModel>(result);
             NotifyOfPropertyChange(() => CategorySearchResult);
         }
+
+        #endregion
 
         #region Override
         protected override async void OnViewLoaded(object view)
@@ -157,7 +265,7 @@ namespace MMFoodDesktopUI.ViewModels
 
         public void AddIngredientToRecipe()
         {
-            var output = new RecipeIngredientDisplayModel();
+            var output = new RecipeIngredientDisplayModel(_ingredientEndPoint);
             output.Ingredient = new IngredientDisplayModel();
             //output.Name = "";
             //output.Quantity = "";

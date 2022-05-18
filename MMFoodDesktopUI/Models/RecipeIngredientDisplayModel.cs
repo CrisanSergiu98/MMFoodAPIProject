@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MMFoodDesktopUILibary.Api;
+using MMFoodDesktopUILibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace MMFoodDesktopUI.Models
         private IngredientDisplayModel _ingredient;
         private float _quantity = 0;
         private string _unit = "";
+        IIngredientEndPoint _ingredientEndpoint;
 
         public IngredientDisplayModel Ingredient
         {
@@ -42,12 +45,25 @@ namespace MMFoodDesktopUI.Models
                 CallPropertyChanged(nameof(Unit));
             }
         }
+        
 
+        public RecipeIngredientDisplayModel(IIngredientEndPoint ingredientEndPoint)
+        {            
+            _ingredientEndpoint = ingredientEndPoint;           
+            _ingredient = new IngredientDisplayModel();
+            _ingredient.PropertyChanged += _ingredient_PropertyChanged;
+        }
+
+        private void _ingredient_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void CallPropertyChanged(string propertyName)
+        private void CallPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }       
+
     }
 }

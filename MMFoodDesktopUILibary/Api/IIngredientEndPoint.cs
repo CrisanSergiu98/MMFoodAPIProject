@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace MMFoodDesktopUILibary.Api
 {
     public interface IIngredientEndPoint
-    {
-        Task<List<IngredientModel>> GetFirstTenIngredients(string name);
+    {        
+        Task<List<IngredientModel>> SearchByName(string name);
     }
 }

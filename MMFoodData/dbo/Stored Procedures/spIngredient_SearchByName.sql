@@ -6,5 +6,5 @@ begin
 
 	select top 10 * 
 	from dbo.Ingredient
-	where [Name] like @Name	
+	where [Name] like '%' + @Name + '%';
 end

@@ -16,11 +16,11 @@ namespace MMFoodDesktopUILibary.Api
         public IngredientEndPoint(IAPIHelper apiHelper)
         {
             _apiHelper = apiHelper;
-        }
+        }        
 
-        public async Task<List<IngredientModel>> GetFirstTenIngredients(string name)
+        public async Task<List<IngredientModel>> SearchByName(string name)
         {
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"api/Recipe/{name}"))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"api/Ingredient?name={name}"))
             {
                 if (response.IsSuccessStatusCode)
                 {

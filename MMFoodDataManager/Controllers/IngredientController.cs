@@ -13,18 +13,11 @@ namespace MMFoodDataManager.Controllers
     [Authorize]
     public class IngredientController : ApiController
     {
-        public List<IngredientModel> Get(string name)
+        public List<IngredientDBModel> Get(string name)
         {
             IngredientData data = new IngredientData();
 
-            List<IngredientModel> output = new List<IngredientModel>();
-
-            foreach(var item in data.SearchByName(name))
-            {
-                output.Add(ModelCovertion.IngredientFromDBModelToModel(item));
-            }
-            
-            return output;
+            return data.SearchByName(name);            
         }
     }
 }

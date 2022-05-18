@@ -89,6 +89,8 @@
 
                 <!--Title section-->
                 <TextBox Text="Your recipe name"
+                         
+                         
                             Style="{StaticResource RecipeTytleStyle}"
                             VerticalContentAlignment="Bottom"/>
 
@@ -142,45 +144,51 @@
                         Style="{StaticResource DefaultTitle}"/>
             <Separator/>
             <!--Ingredients List-->
-            <ListBox ItemsSource="{Binding Path = RecipeIngredients, Mode=TwoWay}"
+            <ListBox x:Name="RecipeIngredients"
                      FontSize="20"
                      SelectedItem="{Binding Path=SelectedIngredient}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel HorizontalAlignment="Left"
+                        
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <DockPanel HorizontalAlignment="Left"
                                     MinHeight="10"
                                     >
-                            <TextBlock Text="Ingredient:"
+                <TextBlock Text="Ingredient:"
                                         Margin="5"
                                         VerticalAlignment="Center"/>
 
-                            <ComboBox SelectedItem="{Binding Path = Ingredient.Name}"
-                                        Text="{Binding Path = Ingredient.Name}"
-                                        ItemsSource="{Binding Path = SearchIngredientResult}"
-                                        IsEditable="True"
-                                        IsTextSearchEnabled="True"
-                                        Background="Transparent"
-                                        BorderBrush="Transparent"
-                                        MinWidth="100"
-                                        Margin="5"
-                                        VerticalContentAlignment="Center"
-                                        Width="150"
-                                        />
-                            <TextBlock Text="Qty:"
+                <ComboBox   SelectedItem="{Binding Path = ToAddIngredient, Mode=TwoWay}"
+                            Text="{Binding Path = ToAddIngredient.Name}"
+                            ItemsSource="{Binding Path = IngredientSearchResult}"
+                            DisplayMemberPath="Name"
+                            IsEditable="True"
+                            IsTextSearchEnabled="True"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            MinWidth="100"
+                            Margin="5"
+                            VerticalContentAlignment="Center"
+                            Width="150"
+                            />
+                <TextBlock Text="Qty:"
                                         Margin="5"
                                         VerticalAlignment="Center"
                                         />
-                            <TextBox HorizontalAlignment="Left"
+                <TextBox HorizontalAlignment="Left"
                                         MinWidth="25"
                                         Text="{Binding Path=Quantity}"
                                         Margin="5"
                                         VerticalAlignment="Center"
                                         Width="50"/>
-                            <TextBlock Text="Unit:"
+                <TextBlock Text="Unit:"
                                         Margin="5"
                                         VerticalAlignment="Center"/>
 
-                            <ComboBox SelectedItem="{Binding Path =Unit }"
+                <ComboBox SelectedItem="{Binding Path =Unit }"
                                         Text="{Binding Path =Unit}"
                                         IsEditable="True"
                                         IsTextSearchEnabled="True"
@@ -190,16 +198,16 @@
                                         VerticalContentAlignment="Center"
                                         Width="100"
                                         >
-                            </ComboBox>
-                        </DockPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <!--Add New Ingredient Button-->
-            <Button x:Name="AddIngredientToRecipe"
+                </ComboBox>
+                
+                <!--Add New Ingredient Button-->
+                <Button x:Name="AddIngredientToRecipe"
                     HorizontalAlignment="Left"
                     Content="+"/>
+                
+            </DockPanel>
+
+            
 
             <!--Steps Section Title-->
             <TextBlock Text="Steps"
