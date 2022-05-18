@@ -11,11 +11,8 @@ using System.Threading.Tasks;
 
 namespace MMFoodDesktopUI.Models
 {
-    public class CategoryDisplayModel : INotifyPropertyChanged, ICategoryDisplayModel
+    public class CategoryDisplayModel : INotifyPropertyChanged
     {
-        private ICategoryEndPoint _categoryEndPoint;
-        private IMapper _mapper;
-
         private string _name;
 
         public string Name
@@ -25,24 +22,12 @@ namespace MMFoodDesktopUI.Models
             {
                 _name = value;
 
-                SearchResults = _mapper.Map<List<CategoryDisplayModel>>(_categoryEndPoint.SearchByName(value));
-
-                Console.WriteLine("");
-
                 CallPropertyChanged(nameof(Name));
             }
         }
 
         public string Description { get; set; }
-        public string PictureUrl { get; set; }
-
-        public List<CategoryDisplayModel> SearchResults { get; set; }
-
-        public CategoryDisplayModel(ICategoryEndPoint categoryEndPoint, IMapper mapper)
-        {
-            _categoryEndPoint = categoryEndPoint;
-            _mapper = mapper;
-        }
+        public string PictureUrl { get; set; }        
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void CallPropertyChanged(string propertyName)

@@ -30,6 +30,7 @@ namespace MMFoodDesktopUI.ViewModels
         private CategoryDisplayModel _selectedCategory;
         private BindingList<RecipeIngredientDisplayModel> _recipeIngredients;
         private BindingList<RecipeStepModel> _steps;
+        private BindingList<CategoryDisplayModel> _categorySearchResult;
 
         #endregion
 
@@ -58,14 +59,14 @@ namespace MMFoodDesktopUI.ViewModels
         public BindingList<CategoryDisplayModel> CategorySearchResult
         {
             get
+            {           
+                return _categorySearchResult;
+            }
+            set
             {
-                //Needs fixing
-                var searchResult = _categoryEndPoint.SearchByName(SelectedCategory.Name);
-
-                var result = _mapper.Map<List<CategoryDisplayModel>>(searchResult);
-
-                return new BindingList<CategoryDisplayModel>(result);                
-            }            
+                _categorySearchResult = value;
+                NotifyOfPropertyChange(() => CategorySearchResult);
+            }
         }
 
         public CategoryDisplayModel SelectedCategory
@@ -93,7 +94,33 @@ namespace MMFoodDesktopUI.ViewModels
             _mapper = mapper;
 
             RecipeIngredients = new BindingList<RecipeIngredientDisplayModel>();
-            SelectedCategory = new CategoryDisplayModel(_categoryEndPoint, _mapper);
+            SelectedCategory = new CategoryDisplayModel();
+            CategorySearchResult = new BindingList<CategoryDisplayModel>();
+
+            SelectedCategory.PropertyChanged += SelectedCategory_PropertyChanged;
+        }
+
+        private async void SelectedCategory_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            //var searchResult = _categoryEndPoint.SearchByName(SelectedCategory.Name);
+
+            var searchResult = await _categoryEndPoint.SearchByName(SelectedCategory.Name);
+
+            //var result = _mapper.Map<List<CategoryDisplayModel>>(searchResult);
+            List<CategoryDisplayModel> result = new List<CategoryDisplayModel>();
+
+            foreach(var i in searchResult)
+            {
+                result.Add(new CategoryDisplayModel
+                {
+                    Name = i.Name,
+                    Description = i.Description,
+                    PictureUrl = i.PictureUrl
+                });
+            }
+
+            CategorySearchResult = new BindingList<CategoryDisplayModel>(result);
+            NotifyOfPropertyChange(() => CategorySearchResult);
         }
 
         #region Override

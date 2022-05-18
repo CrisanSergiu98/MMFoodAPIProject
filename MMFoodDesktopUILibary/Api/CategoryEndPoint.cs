@@ -35,7 +35,7 @@ namespace MMFoodDesktopUILibary.Api
         }
         public async Task<List<CategoryModel>> SearchByName(string name)
         {
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"api/Category/{name}"))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"api/Category?name={name}"))
             {
                 if (response.IsSuccessStatusCode)
                 {

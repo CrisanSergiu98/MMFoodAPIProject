@@ -98,7 +98,6 @@
     <Compile Include="EventModels\LogOnEvent.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
     <Compile Include="Models\CategoryDisplayModel.cs" />
-    <Compile Include="Models\ICategoryDisplayModel.cs" />
     <Compile Include="Models\IngredientDisplayModel.cs" />
     <Compile Include="Models\RecipeIngredientDisplayModel.cs" />
     <Compile Include="ViewModels\CreateRecipeViewModel.cs" />
