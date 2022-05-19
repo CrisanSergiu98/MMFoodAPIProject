@@ -144,26 +144,27 @@
                         Style="{StaticResource DefaultTitle}"/>
             <Separator/>
             <!--Ingredients List-->
-            <ListBox x:Name="RecipeIngredients"
+            <ListBox ItemsSource="{Binding Path=RecipeIngredients, Mode=OneWay}"
                      FontSize="20"
                      SelectedItem="{Binding Path=SelectedIngredient}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"/>
+                        </StackPanel>                        
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
             <DockPanel HorizontalAlignment="Left"
-                                    MinHeight="10"
-                                    >
+                       MinHeight="10">
                 <TextBlock Text="Ingredient:"
-                                        Margin="5"
-                                        VerticalAlignment="Center"/>
+                            Margin="5"
+                            VerticalAlignment="Center"/>
 
                 <ComboBox   SelectedItem="{Binding Path = ToAddIngredient, Mode=TwoWay}"
-                            Text="{Binding Path = ToAddIngredient.Name}"
-                            ItemsSource="{Binding Path = IngredientSearchResult}"
+                            Text="{Binding Path = ToAddIngredient.Name, Mode=TwoWay}"
+                            ItemsSource="{Binding Path = IngredientSearchResult, Mode=TwoWay}"
                             DisplayMemberPath="Name"
                             IsEditable="True"
                             IsTextSearchEnabled="True"
@@ -175,20 +176,26 @@
                             Width="150"
                             />
                 <TextBlock Text="Qty:"
-                                        Margin="5"
-                                        VerticalAlignment="Center"
-                                        />
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            />
                 <TextBox HorizontalAlignment="Left"
-                                        MinWidth="25"
-                                        Text="{Binding Path=Quantity}"
-                                        Margin="5"
-                                        VerticalAlignment="Center"
-                                        Width="50"/>
+                        MinWidth="25"
+                        Text="{Binding Path=ToAddRecipeIngredient.Quantity}"
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        Width="50"/>
                 <TextBlock Text="Unit:"
-                                        Margin="5"
-                                        VerticalAlignment="Center"/>
+                            Margin="5"
+                            VerticalAlignment="Center"/>
+                <TextBox HorizontalAlignment="Left"
+                        MinWidth="25"
+                        Text="{Binding Path=ToAddRecipeIngredient.Unit}"
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        Width="50"/>
 
-                <ComboBox SelectedItem="{Binding Path =Unit }"
+                <!--<ComboBox SelectedItem="{Binding Path =Unit }"
                                         Text="{Binding Path =Unit}"
                                         IsEditable="True"
                                         IsTextSearchEnabled="True"
@@ -198,7 +205,7 @@
                                         VerticalContentAlignment="Center"
                                         Width="100"
                                         >
-                </ComboBox>
+                </ComboBox>-->
                 
                 <!--Add New Ingredient Button-->
                 <Button x:Name="AddIngredientToRecipe"

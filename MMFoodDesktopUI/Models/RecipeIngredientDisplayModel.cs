@@ -13,8 +13,7 @@ namespace MMFoodDesktopUI.Models
     {
         private IngredientDisplayModel _ingredient;
         private float _quantity = 0;
-        private string _unit = "";
-        IIngredientEndPoint _ingredientEndpoint;
+        private string _unit = "";        
 
         public IngredientDisplayModel Ingredient
         {
@@ -45,18 +44,18 @@ namespace MMFoodDesktopUI.Models
                 CallPropertyChanged(nameof(Unit));
             }
         }
-        
 
-        public RecipeIngredientDisplayModel(IIngredientEndPoint ingredientEndPoint)
-        {            
-            _ingredientEndpoint = ingredientEndPoint;           
-            _ingredient = new IngredientDisplayModel();
-            _ingredient.PropertyChanged += _ingredient_PropertyChanged;
+        public string DisplayText { 
+            get
+            {
+                return $"{Quantity} {_unit} {Ingredient.Name}";
+            }
         }
 
-        private void _ingredient_PropertyChanged(object sender, PropertyChangedEventArgs e)
+
+        public RecipeIngredientDisplayModel()
         {
-            throw new NotImplementedException();
+            _ingredient = new IngredientDisplayModel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
