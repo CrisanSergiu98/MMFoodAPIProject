@@ -14,7 +14,7 @@ namespace MMFoodDesktopUILibary.Models
         public string Email { get; set; }
         public DateTime CreateDate { get; set; }
 
-        public void LoggOffUser()
+        public void ResetUserModel()
         {
             Token = "";
             Id = "";

@@ -9,6 +9,6 @@ namespace MMFoodDesktopUILibary.Models
         string Id { get; set; }
         string Token { get; set; }
         string Username { get; set; }
-        void LoggOffUser();
+        void ResetUserModel();
     }
 }

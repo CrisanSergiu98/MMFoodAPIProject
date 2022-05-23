@@ -34,6 +34,11 @@ namespace MMFoodDesktopUILibrary.Api
             InitializeClient();
         }
 
+        public void LogOffUser()
+        {
+            _apiClient.DefaultRequestHeaders.Clear();
+        }
+
         /// <summary>
         /// Initializing the HTTPClient
         /// </summary>

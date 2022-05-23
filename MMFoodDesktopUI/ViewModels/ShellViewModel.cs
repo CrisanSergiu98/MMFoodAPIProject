@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MMFoodDesktopUI.EventModels;
 using MMFoodDesktopUILibary.Models;
+using MMFoodDesktopUILibrary.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace MMFoodDesktopUI.ViewModels
         private CreateRecipeViewModel _createRecpieVM;
         private IEventAggregator _events;
         private ILoggedInUserModel _user;
+        private IAPIHelper _apiHelper;
 
         public bool IsLoggedIn 
         {
@@ -30,11 +32,12 @@ namespace MMFoodDesktopUI.ViewModels
             }
         }
 
-        public ShellViewModel(CreateRecipeViewModel createRecipeVM, IEventAggregator events, ILoggedInUserModel user)
+        public ShellViewModel(CreateRecipeViewModel createRecipeVM, IEventAggregator events, ILoggedInUserModel user, IAPIHelper apiHelper)
         {
             _events = events;
             _createRecpieVM = createRecipeVM;
             _user = user;
+            _apiHelper = apiHelper;
 
             _events.Subscribe(this);
 
@@ -55,7 +58,8 @@ namespace MMFoodDesktopUI.ViewModels
 
         public void LogOut()
         {
-            _user.LoggOffUser();
+            _user.ResetUserModel();
+            _apiHelper.LogOffUser();
             ActivateItem(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
         }

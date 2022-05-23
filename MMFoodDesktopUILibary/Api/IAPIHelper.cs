@@ -9,5 +9,6 @@ namespace MMFoodDesktopUILibrary.Api
         Task<AuthenticatedUser> Authenticate(string username, string password);
         Task GetLogedinUserInfo(string token);
         HttpClient ApiClient { get; }
+        void LogOffUser();
     }
 }
