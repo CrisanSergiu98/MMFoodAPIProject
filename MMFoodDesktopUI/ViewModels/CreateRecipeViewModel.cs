@@ -11,6 +11,7 @@ using System.Net;
 using MMFoodDesktopUILibrary.Models;
 using AutoMapper;
 using MMFoodDesktopUI.Models;
+using MMFoodDesktopUI.Helper;
 
 namespace MMFoodDesktopUI.ViewModels
 {
@@ -186,12 +187,7 @@ namespace MMFoodDesktopUI.ViewModels
 
             foreach (var i in searchResult)
             {
-                result.Add(new CategoryDisplayModel
-                {
-                    Name = i.Name,
-                    Description = i.Description,
-                    PictureUrl = i.PictureUrl
-                });
+                result.Add(ModelConvertor.FromCategoryModelToDisplay(i));
             }
 
             CategorySearchResult = new BindingList<CategoryDisplayModel>(result);
@@ -205,6 +201,61 @@ namespace MMFoodDesktopUI.ViewModels
         {
             base.OnViewLoaded(view);
             //await LoadCategories();
+        }
+
+        #endregion        
+
+        #region Public Methods
+
+        public void AddIngredientToRecipe()
+        {
+            _toAddRecipeIngredient.Ingredient = _toAddIngredient;
+
+            RecipeIngredients.Add(_toAddRecipeIngredient);
+
+            
+
+            NotifyOfPropertyChange(() => RecipeIngredients);
+        }
+
+        /// <summary>
+        /// Edit Ingredient Button
+        /// </summary>
+        public void EditIngredient()
+        {
+            ToAddRecipeIngredient.Ingredient = SelectedIngredient.Ingredient;
+            ToAddRecipeIngredient.Quantity = SelectedIngredient.Quantity;
+            ToAddRecipeIngredient.Unit = SelectedIngredient.Unit;
+
+
+            NotifyOfPropertyChange(() => ToAddRecipeIngredient);
+
+            RecipeIngredients.Remove(SelectedIngredient);
+        }
+
+        /// <summary>
+        /// Remove Ingredient Button
+        /// </summary>
+        public void RemoveIngredient()
+        {
+            RecipeIngredients.Remove(SelectedIngredient);
+        }
+
+        public void AddStepToRecipe()
+        {
+            var output = new RecipeStepModel();
+            
+            output.Number = Steps.Count() + 1;
+            output.Details = "Step Details...";
+
+            Steps.Add(output);
+            NotifyOfPropertyChange(() => Steps);
+        }
+        public async Task SaveRecipe()
+        {
+            var toSaveRecipe = new RecipeModel();
+
+            toSaveRecipe.Category = ModelConvertor.FromCategoryDisplayToModel(SelectedCategory);
         }
 
         #endregion
@@ -227,33 +278,10 @@ namespace MMFoodDesktopUI.ViewModels
             }
         }
 
-
-        #endregion
-
-        #region Public Methods
-
-        public void AddIngredientToRecipe()
+        private bool ValidateRecipe()
         {
-            _toAddRecipeIngredient.Ingredient = _toAddIngredient;
-
-            RecipeIngredients.Add(_toAddRecipeIngredient);
-
-            NotifyOfPropertyChange(() => RecipeIngredients);
-        }
-        public void AddStepToRecipe()
-        {
-            var output = new RecipeStepModel();
-
-            output.Title = "Step Title";
-            output.Number = Steps.Count() + 1;
-            output.Details = "Step Details...";
-
-            Steps.Add(output);
-            NotifyOfPropertyChange(() => Steps);
-        }
-        public async Task SaveRecipe()
-        {
-            //
+            bool output = true;
+            return output;
         }
 
         #endregion

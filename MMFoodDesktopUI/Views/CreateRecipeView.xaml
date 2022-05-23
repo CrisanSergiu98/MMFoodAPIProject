@@ -140,8 +140,24 @@
                         />
 
             <!--Ingredients section-->
-            <TextBlock Text="Ingredients"
-                        Style="{StaticResource DefaultTitle}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Ingredients"
+                        Style="{StaticResource DefaultTitle}"
+                           HorizontalAlignment="Center"/>
+                <!--<Button x:Name="EditIngredient"
+                        HorizontalAlignment="Left"
+                        Content="Edit"                        
+                        Margin="10"
+                        Padding="5"/>-->                
+                <Button x:Name="RemoveIngredient"
+                        HorizontalAlignment="Left"
+                        Content="  -  "                        
+                        Margin="10"
+                        Padding="5"
+                        />
+                
+            </StackPanel>
+            
             <Separator/>
             <!--Ingredients List-->
             <ListBox ItemsSource="{Binding Path=RecipeIngredients, Mode=OneWay}"
@@ -150,7 +166,10 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"/>
+                            
+                            <TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
+                                       VerticalAlignment="Center"
+                                       Margin="20,0,10,0"/>                            
                         </StackPanel>                        
                     </DataTemplate>
                 </ListBox.ItemTemplate>

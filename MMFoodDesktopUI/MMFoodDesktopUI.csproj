@@ -96,6 +96,7 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="EventModels\LogOnEvent.cs" />
+    <Compile Include="Helper\ModelConvertor.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
     <Compile Include="Models\CategoryDisplayModel.cs" />
     <Compile Include="Models\IngredientDisplayModel.cs" />

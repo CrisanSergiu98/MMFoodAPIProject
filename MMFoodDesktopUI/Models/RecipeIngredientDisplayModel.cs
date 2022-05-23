@@ -13,7 +13,9 @@ namespace MMFoodDesktopUI.Models
     {
         private IngredientDisplayModel _ingredient;
         private float _quantity = 0;
-        private string _unit = "";        
+        private string _unit = "";
+
+        public int RecipeId { get; set; }
 
         public IngredientDisplayModel Ingredient
         {

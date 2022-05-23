@@ -8,7 +8,6 @@ namespace MMFoodDataManagerLibrary.Models
 {
     public class CategoryDBModel
     {
-        //Id, [Name], [Description], PictureURL
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
