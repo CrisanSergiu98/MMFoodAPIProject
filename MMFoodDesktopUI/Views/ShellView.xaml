@@ -11,21 +11,18 @@
         <Menu DockPanel.Dock="Top" 
               FontSize="18">
             <MenuItem Header="File">
-                
+                <MenuItem x:Name="Setting" Header="Settings"/>
+                <MenuItem x:Name="ExitApplication" Header="E_xit"/>                
             </MenuItem>
 
             <MenuItem Header="Recipes">
-                <MenuItem Header="Create Recipe" FontSize="16"/>
-                <MenuItem Header="My Recpies" FontSize="16"/>
-                <MenuItem Header="My Fridge Search" FontSize="16"/>
-                <MenuItem Header="Search" FontSize="16"/>
-            </MenuItem>
-
-            <MenuItem Header="Fridge">                
+                <MenuItem Header="Create Recipe"/>
             </MenuItem>
             
-            <MenuItem Header="User">
-                <MenuItem Header="Login" FontSize="16"/>
+            <MenuItem Header="User"
+                      Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConvertor}}">
+                <MenuItem x:Name="LogOut" 
+                          Header="_Log Out"/>
             </MenuItem>
             
         </Menu>

@@ -13,5 +13,14 @@ namespace MMFoodDesktopUILibary.Models
         public string Username { get; set; }
         public string Email { get; set; }
         public DateTime CreateDate { get; set; }
+
+        public void LoggOffUser()
+        {
+            Token = "";
+            Id = "";
+            Username = "";
+            Email = "";
+            CreateDate = DateTime.MinValue;
+        }
     }
 }
