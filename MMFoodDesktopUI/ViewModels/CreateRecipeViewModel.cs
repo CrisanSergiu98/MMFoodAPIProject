@@ -256,6 +256,8 @@ namespace MMFoodDesktopUI.ViewModels
             var toSaveRecipe = new RecipeModel();
 
             toSaveRecipe.Category = ModelConvertor.FromCategoryDisplayToModel(SelectedCategory);
+
+            await _recipeEndpoint.PostRecipe(toSaveRecipe);
         }
 
         #endregion

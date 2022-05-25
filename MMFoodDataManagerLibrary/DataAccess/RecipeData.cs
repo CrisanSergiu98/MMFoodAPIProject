@@ -11,38 +11,69 @@ namespace MMFoodDataManagerLibrary.DataAccess
     public class RecipeData
     {
         public void SaveRecipe(RecipeModel recipe, string userId)
-        {
-            SQLDataAccess sql = new SQLDataAccess();
+        {            
             RecipeIngredientData recipeIngredientData = new RecipeIngredientData();
             CategoryData categoryData = new CategoryData();
             StepData stepData = new StepData();
 
-            RecipeDBModel dbRecipe = new RecipeDBModel();
+            List<RecipeIngredientDBModel> recipeIngredients = new List<RecipeIngredientDBModel>();
 
-            dbRecipe.Title = recipe.Title;
-            dbRecipe.Description = recipe.Description;
-            dbRecipe.PictureUrl = recipe.PictureUrl;
-            dbRecipe.IPublished = false;
-            dbRecipe.UserId = userId;
-
-            dbRecipe.CategoryId = categoryData.Lookup(recipe.Category.Name);
-
-            sql.SaveData("dbo.spRecipeIngredient_Insert", dbRecipe, "MMFoodData");
-
-            dbRecipe.Id = Lookup(dbRecipe.Title, dbRecipe.UserId); 
-
-            //Save Ingredients
-            foreach (var i in recipe.RecipeIngredients)
+            RecipeDBModel dbRecipe = new RecipeDBModel
             {
-                recipeIngredientData.SaveRecipeIngredient(i, dbRecipe.Id);
-            }    
-            
-            //Save Steps
-            foreach(var s in recipe.Steps)
+                Name = recipe.Name,
+                Description = recipe.Description,
+                PictureUrl = recipe.PictureUrl,
+                IPublished = false,
+                UserId = userId,
+                CategoryId = recipe.Category.Id
+            };
+
+            foreach(var i in recipe.RecipeIngredients)
             {
-                s.RecipeId = dbRecipe.Id;
-                stepData.Save(s);
-            }
+                recipeIngredients.Add(new RecipeIngredientDBModel
+                {
+                    IngredientId=i.Ingredient.Id,
+                    Quantity = i.Quantity,
+                    Unit=i.Unit
+                    
+                });
+            }            
+
+            using (SQLDataAccess sql = new SQLDataAccess())
+            {
+                try
+                {
+                    sql.StartTranzaction("MMFoodData");
+
+                    //Save the Recipe
+                    sql.SaveDataInTranzaction("dbo.spRecipe_Insert", dbRecipe);
+
+                    //Get the Recipe Id
+                    dbRecipe.Id = sql.LoadDataInTranzaction<int, dynamic>("dbo.spRecipe_Lookup", new { dbRecipe.Name, dbRecipe.UserId }).FirstOrDefault();
+
+                    //Save the Ingredient List
+                    foreach (var i in recipeIngredients)
+                    {
+                        i.RecipeId = dbRecipe.Id;
+
+                        sql.SaveDataInTranzaction("dbo.spRecipeIntredient_Insert", i);
+                    }
+
+                    //Save Setps
+                    foreach (var i in recipe.Steps)
+                    {
+                        i.RecipeId = dbRecipe.Id;
+
+                        sql.SaveDataInTranzaction("dbo.spStep_Insert", i);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    sql.RollbackTranzaction();
+                    throw;
+                }
+            }            
         }
 
         public int Lookup(string title, string userId)

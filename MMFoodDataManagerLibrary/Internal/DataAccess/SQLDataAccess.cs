@@ -14,7 +14,7 @@ namespace MMFoodDataManagerLibrary.Internal.DataAccess
     /// Internal class to handle the data base "talking".
     /// We made it internal because we wint call it directly from our UI
     /// </summary>
-    internal class SQLDataAccess
+    internal class SQLDataAccess: IDisposable
     {
         /// <summary>
         /// Get the conenction string from the App.Config/Web.Config depending on the app that we are using
@@ -63,6 +63,72 @@ namespace MMFoodDataManagerLibrary.Internal.DataAccess
             {
                 connection.Execute(storedProcedures, parameters, commandType: CommandType.StoredProcedure);                
             }
+        }
+
+        private IDbConnection _connection;
+        private IDbTransaction _tranzaction;
+        private bool isColsed = false;
+
+        //Start Tranzaction
+        public void StartTranzaction(string connectionStringName)
+        {
+            string connectionString = GetConnectionString(connectionStringName);
+
+            _connection = new SqlConnection(connectionString);
+
+            _connection.Open();
+
+            _tranzaction = _connection.BeginTransaction();
+
+            isColsed = false;
+        }
+
+        public void SaveDataInTranzaction<T>(string storedProcedures, T parameters)
+        {        
+            _connection.Execute(storedProcedures, parameters, commandType: CommandType.StoredProcedure, transaction: _tranzaction);            
+        }
+
+        public List<T> LoadDataInTranzaction<T, U>(string storedProcedures, U parameters)
+        {
+                List<T> rows = _connection.Query<T>(storedProcedures, parameters,
+                    commandType: CommandType.StoredProcedure, transaction: _tranzaction).ToList();
+                return rows;
+        }
+
+        public void CommitTranzaction()
+        {
+            //Apply changes to the db
+            _tranzaction?.Commit();
+            _connection.Close();
+
+            isColsed = true;
+        }
+
+        public void RollbackTranzaction()
+        {
+            //rollback changes
+            _tranzaction?.Rollback();
+            _connection.Close();
+
+            isColsed = true;
+        }
+
+        public void Dispose()
+        {
+            if (!isColsed)
+            {
+                try
+                {
+                    CommitTranzaction();
+                }
+                catch
+                {
+                    //Log issue
+                }
+            }                
+
+            _tranzaction = null;
+            _connection = null;
         }
     }
 }

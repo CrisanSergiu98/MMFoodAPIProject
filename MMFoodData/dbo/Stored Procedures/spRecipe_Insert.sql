@@ -1,15 +1,18 @@
 ﻿CREATE PROCEDURE [dbo].[spRecipe_Insert]
-	@Id int,
-	@UserId nvarchar(128),
+	@Id int output,
+	@Name nvarchar,
+	@Description nvarchar,
+	@PictureUrl nvarchar,
+	@CreateDate datetime2,
 	@CategoryId int,
-	@Title nvarchar(50),
-	@Description nvarchar(50),
-	@PictureUrl nvarchar(128),
+	@QuisineId int,	
+	@UserId nvarchar,
 	@IsPublished bit
 AS
 begin
 	set nocount on;
-
-	insert into dbo.Recipe(UserId, CategoryId, Title, [Description], PictureUrl, IsPublished)
-	values(@UserId, @CategoryId, @Title, @Description, @PictureUrl, @IsPublished);
+	insert into dbo.Recipe([Name], [Description], PictureUrl, CreateDate, CategoryId, QuisineId, UserId, IsPublished)
+	values(@Name, @Description, @PictureUrl, @CreateDate, @CategoryId, @QuisineId, @UserId, @IsPublished);
+	
+	select @Id= SCOPE_IDENTITY();
 end
