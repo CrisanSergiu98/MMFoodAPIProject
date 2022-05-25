@@ -27,7 +27,10 @@ namespace MMFoodDesktopUI.ViewModels
         #endregion
 
         #region Backing Fields
-        
+
+        private string _title;
+        private string _description;
+        private string _pictureUrl;
         private CategoryDisplayModel _selectedCategory;
         private BindingList<RecipeIngredientDisplayModel> _recipeIngredients;
         private BindingList<RecipeStepModel> _steps;
@@ -39,51 +42,37 @@ namespace MMFoodDesktopUI.ViewModels
 
         #endregion
 
-        #region Properties
+        #region Properties        
 
-        public BindingList<RecipeIngredientDisplayModel> RecipeIngredients
+        #region Binging
+
+        public string Title
         {
-            get { return _recipeIngredients; }
+            get { return _title; }
             set
             {
-                _recipeIngredients = value;
-                NotifyOfPropertyChange(() => RecipeIngredients);
+                _title = value;
+                NotifyOfPropertyChange(() => Title);
             }
         }
-
-        public BindingList<RecipeStepModel> Steps
+        public string PictureUrl
         {
-            get { return _steps; }
+            get { return _pictureUrl; }
             set
             {
-                _steps = value;
-                NotifyOfPropertyChange(() => Steps);
+                _pictureUrl = value;
+                NotifyOfPropertyChange(() => PictureUrl);
             }
         }
-
-        public BindingList<CategoryDisplayModel> CategorySearchResult
+        public string Description
         {
-            get
-            {           
-                return _categorySearchResult;
-            }
+            get { return _description; }
             set
             {
-                _categorySearchResult = value;
-                NotifyOfPropertyChange(() => CategorySearchResult);
-            }
-        }        
-
-        public BindingList<IngredientDisplayModel> IngredientSearchResult
-        {
-            get { return _ingredientSearchResult; }
-            set 
-            {
-                _ingredientSearchResult = value;
-                NotifyOfPropertyChange(() => IngredientSearchResult);
+                _description = value;
+                NotifyOfPropertyChange(() => Description);
             }
         }
-
         public CategoryDisplayModel SelectedCategory
         {
             get
@@ -96,30 +85,16 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => SelectedCategory);
                 NotifyOfPropertyChange(() => CategorySearchResult);
             }
-        }        
-
-        public RecipeIngredientDisplayModel SelectedIngredient
+        }
+        public BindingList<RecipeIngredientDisplayModel> RecipeIngredients
         {
-            get { return _selectedIngredient; }
-            set 
-            { 
-                _selectedIngredient = value;
-                NotifyOfPropertyChange(() => SelectedIngredient);
-                NotifyOfPropertyChange(() => IngredientSearchResult);
-                NotifyOfPropertyChange(() => ToAddIngredient);
-            }
-        }        
-
-        public IngredientDisplayModel ToAddIngredient
-        {
-            get { return _toAddIngredient; }
-            set 
+            get { return _recipeIngredients; }
+            set
             {
-                _toAddIngredient = value;
-                NotifyOfPropertyChange(() => ToAddIngredient);
+                _recipeIngredients = value;
+                NotifyOfPropertyChange(() => RecipeIngredients);
             }
-        }        
-
+        }
         public RecipeIngredientDisplayModel ToAddRecipeIngredient
         {
             get { return _toAddRecipeIngredient; }
@@ -129,6 +104,93 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => ToAddRecipeIngredient);
             }
         }
+        public BindingList<RecipeStepModel> Steps
+        {
+            get { return _steps; }
+            set
+            {
+                _steps = value;
+                NotifyOfPropertyChange(() => Steps);
+            }
+        }
+
+        #endregion
+
+        #region Logic
+
+        public BindingList<IngredientDisplayModel> IngredientSearchResult
+        {
+            get { return _ingredientSearchResult; }
+            set
+            {
+                _ingredientSearchResult = value;
+                NotifyOfPropertyChange(() => IngredientSearchResult);
+            }
+        }
+        public RecipeIngredientDisplayModel SelectedIngredient
+        {
+            get { return _selectedIngredient; }
+            set
+            {
+                _selectedIngredient = value;
+                NotifyOfPropertyChange(() => SelectedIngredient);
+                NotifyOfPropertyChange(() => IngredientSearchResult);
+                NotifyOfPropertyChange(() => ToAddIngredient);
+            }
+        }
+        public BindingList<CategoryDisplayModel> CategorySearchResult
+        {
+            get
+            {
+                return _categorySearchResult;
+            }
+            set
+            {
+                _categorySearchResult = value;
+                NotifyOfPropertyChange(() => CategorySearchResult);
+            }
+        }
+        public IngredientDisplayModel ToAddIngredient
+        {
+            get { return _toAddIngredient; }
+            set
+            {
+                _toAddIngredient = value;
+                NotifyOfPropertyChange(() => ToAddIngredient);
+            }
+        }
+
+        #endregion
+
+        #region ErrorMessages
+
+        private ErrorDisplayModel _titleError;
+
+        public ErrorDisplayModel TitleError
+        {
+            get { return _titleError; }
+            set 
+            { 
+                _titleError = value;
+                NotifyOfPropertyChange(() => TitleError);
+            }
+        }
+
+        private ErrorDisplayModel _toAddIngredientError;
+
+        public ErrorDisplayModel ToAddIngredientError
+        {
+            get { return _toAddIngredientError; }
+            set 
+            { 
+                _toAddIngredientError = value;
+                NotifyOfPropertyChange(() => ToAddIngredientError);
+            }
+        }
+
+
+
+        #endregion
 
         #endregion
 
@@ -140,7 +202,11 @@ namespace MMFoodDesktopUI.ViewModels
             _categoryEndPoint = categoryEndPoint;
             _recipeEndpoint = recipeEndpoint;
             _ingredientEndPoint = ingredientEndPoint;
-            _mapper = mapper;            
+            _mapper = mapper;
+
+            Title = "Your recipe title...";
+            Description = "Your recipe description...";
+            PictureUrl = "Picture URL...";
 
             RecipeIngredients = new BindingList<RecipeIngredientDisplayModel>();
             SelectedCategory = new CategoryDisplayModel();
@@ -150,7 +216,13 @@ namespace MMFoodDesktopUI.ViewModels
             CategorySearchResult = new BindingList<CategoryDisplayModel>();
             IngredientSearchResult = new BindingList<IngredientDisplayModel>();
             _toAddIngredient = new IngredientDisplayModel();
-            _toAddRecipeIngredient = new RecipeIngredientDisplayModel();
+            _toAddRecipeIngredient = new RecipeIngredientDisplayModel();            
+
+            #region ErrorMessagesInitialization
+
+            _toAddIngredientError = new ErrorDisplayModel();
+
+            #endregion
 
             SelectedCategory.PropertyChanged += SelectedCategory_PropertyChanged;
             ToAddIngredient.PropertyChanged += ToAddIngredient_PropertyChanged;
@@ -170,6 +242,7 @@ namespace MMFoodDesktopUI.ViewModels
             {
                 result.Add(new IngredientDisplayModel
                 {
+                    Id=i.Id,
                     Name = i.Name,
                     PictureUrl = i.PictureUrl,
                     Description = i.Description
@@ -209,33 +282,16 @@ namespace MMFoodDesktopUI.ViewModels
 
         public void AddIngredientToRecipe()
         {
-            _toAddRecipeIngredient.Ingredient = _toAddIngredient;
+            if (ValidateIngredient())
+            {
+                _toAddRecipeIngredient.Ingredient = _toAddIngredient;
 
-            RecipeIngredients.Add(_toAddRecipeIngredient);
+                RecipeIngredients.Add(_toAddRecipeIngredient);
 
-            
-
-            NotifyOfPropertyChange(() => RecipeIngredients);
+                NotifyOfPropertyChange(() => RecipeIngredients);
+            }            
         }
-
-        /// <summary>
-        /// Edit Ingredient Button
-        /// </summary>
-        public void EditIngredient()
-        {
-            ToAddRecipeIngredient.Ingredient = SelectedIngredient.Ingredient;
-            ToAddRecipeIngredient.Quantity = SelectedIngredient.Quantity;
-            ToAddRecipeIngredient.Unit = SelectedIngredient.Unit;
-
-
-            NotifyOfPropertyChange(() => ToAddRecipeIngredient);
-
-            RecipeIngredients.Remove(SelectedIngredient);
-        }
-
-        /// <summary>
-        /// Remove Ingredient Button
-        /// </summary>
+        
         public void RemoveIngredient()
         {
             RecipeIngredients.Remove(SelectedIngredient);
@@ -253,11 +309,28 @@ namespace MMFoodDesktopUI.ViewModels
         }
         public async Task SaveRecipe()
         {
-            var toSaveRecipe = new RecipeModel();
+            RecipeModel toSaveRecipe = new RecipeModel();
+
+            toSaveRecipe.Title = Title;
+            toSaveRecipe.Description = Description;
+            toSaveRecipe.PictureUrl = PictureUrl;
 
             toSaveRecipe.Category = ModelConvertor.FromCategoryDisplayToModel(SelectedCategory);
 
-            await _recipeEndpoint.PostRecipe(toSaveRecipe);
+            foreach(var i in RecipeIngredients)
+            {
+                toSaveRecipe.RecipeIngredients.Add(ModelConvertor.FromRecipeIngredientDisplayToModel(i)); 
+            }
+
+            foreach(var i in Steps)
+            {
+                toSaveRecipe.Steps.Add(i);
+            }
+
+            if (ValidateRecipe())
+            {
+                //await _recipeEndpoint.PostRecipe(toSaveRecipe);
+            }
         }
 
         #endregion
@@ -283,6 +356,72 @@ namespace MMFoodDesktopUI.ViewModels
         private bool ValidateRecipe()
         {
             bool output = true;
+
+            if (Title.Length <= 0)
+            {
+                output = false;
+            }
+                
+
+            if (Description.Length <= 0)
+            {
+                output = false;
+            }
+                
+
+            if (PictureUrl.Length <= 0)
+            {
+                output = false;
+            }
+                
+
+            if (RecipeIngredients.Count <= 0)
+            {
+                output = false;
+            }
+                
+
+            if (RecipeIngredients.Count <= 0)
+            {
+                output = false;
+            }                
+
+            return output;
+        }
+
+        private bool ValidateIngredient()
+        {
+            bool output = true;
+            ToAddIngredientError.ErrorMessage = "";
+
+            if (ToAddRecipeIngredient.Unit.Length == 0)
+            {
+                output = false;
+                ToAddIngredientError.ErrorMessage = "Unit not specified";
+            }
+
+            if (ToAddRecipeIngredient.Quantity == 0)
+            {
+                output = false;
+                ToAddIngredientError.ErrorMessage = "Quantity has to be bigger than 0";
+            }
+
+            try
+            {
+                if (_toAddIngredient.Id == 0)
+                {
+                    output = false;
+                    ToAddIngredientError.ErrorMessage = "You have to select an ingredient from the list";
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                output = false;
+
+                _toAddIngredient = new IngredientDisplayModel();
+                ToAddIngredientError.ErrorMessage = "You have to select an ingredient from the list";
+            }
+
             return output;
         }
 

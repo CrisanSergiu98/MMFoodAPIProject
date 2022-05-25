@@ -6,6 +6,7 @@
              mc:Ignorable="d" Background="LightGray" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <!--#region Styles-->
         <!--Base ComboBox Style-->
         <Style TargetType="ComboBoxItem">
 
@@ -74,13 +75,14 @@
                BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="FontSize" Value="15"/>
         </Style>
-
+        <!--#endregion-->
     </UserControl.Resources>
     <ScrollViewer>
         <StackPanel Margin="20"
-                    Orientation="Vertical">
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center">
 
-            <!--Title + Picture-->
+            <!--#region TitleAndPicture-->
             <StackPanel Orientation="Horizontal">
                 <!--Picture-->
                 <Image Source="{Binding Path=PictureUrl}"
@@ -88,16 +90,15 @@
                         />
 
                 <!--Title section-->
-                <TextBox Text="Your recipe name"
-                         
-                         
-                            Style="{StaticResource RecipeTytleStyle}"
-                            VerticalContentAlignment="Bottom"/>
+                <TextBox Text="{Binding Path=Title}"
+                        Style="{StaticResource RecipeTytleStyle}"
+                        VerticalContentAlignment="Bottom"/>
 
             </StackPanel>
             <Separator/>
+            <!--#endregion-->            
 
-            <!--Picture URL-->
+            <!--#region Recipe Details-->
             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
 
                 <TextBlock Text="Pic URL:"
@@ -106,7 +107,7 @@
                 <TextBox Text="{Binding Path = PictureUrl}"
                             MinWidth="150"
                             MaxWidth="400"/>
-            </StackPanel>
+            </StackPanel>    
 
             <!--Category Senction-->
             <StackPanel Orientation="Horizontal">
@@ -135,9 +136,13 @@
             <!--Description Box-->
             <TextBox Grid.Column="1"
                         Grid.Row="8"
-                        Text="A short escription of your recipe."
+                        Text="{Binding Path=Description}"
                         Style="{StaticResource DescriptionBox}"
                         />
+
+            <!--#endregion-->
+            
+            <!--#region Ingredients-->
 
             <!--Ingredients section-->
             <StackPanel Orientation="Horizontal">
@@ -148,16 +153,16 @@
                         HorizontalAlignment="Left"
                         Content="Edit"                        
                         Margin="10"
-                        Padding="5"/>-->                
+                        Padding="5"/>-->
                 <Button x:Name="RemoveIngredient"
                         HorizontalAlignment="Left"
                         Content="  -  "                        
                         Margin="10"
                         Padding="5"
                         />
-                
+
             </StackPanel>
-            
+
             <Separator/>
             <!--Ingredients List-->
             <ListBox ItemsSource="{Binding Path=RecipeIngredients, Mode=OneWay}"
@@ -166,22 +171,25 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            
+
                             <TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
                                        VerticalAlignment="Center"
-                                       Margin="20,0,10,0"/>                            
-                        </StackPanel>                        
+                                       Margin="20,0,10,0"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <DockPanel HorizontalAlignment="Left"
+            <!--#region Add Ingredient Row-->
+
+            <StackPanel Orientation="Vertical">
+                <DockPanel HorizontalAlignment="Left"
                        MinHeight="10">
-                <TextBlock Text="Ingredient:"
+                    <TextBlock Text="Ingredient:"
                             Margin="5"
                             VerticalAlignment="Center"/>
 
-                <ComboBox   SelectedItem="{Binding Path = ToAddIngredient, Mode=TwoWay}"
+                    <ComboBox   SelectedItem="{Binding Path = ToAddIngredient, Mode=TwoWay}"
                             Text="{Binding Path = ToAddIngredient.Name, Mode=TwoWay}"
                             ItemsSource="{Binding Path = IngredientSearchResult, Mode=TwoWay}"
                             DisplayMemberPath="Name"
@@ -194,46 +202,48 @@
                             VerticalContentAlignment="Center"
                             Width="150"
                             />
-                <TextBlock Text="Qty:"
+                    <TextBlock Text="Qty:"
                             Margin="5"
                             VerticalAlignment="Center"
                             />
-                <TextBox HorizontalAlignment="Left"
+                    <TextBox HorizontalAlignment="Left"
                         MinWidth="25"
                         Text="{Binding Path=ToAddRecipeIngredient.Quantity}"
                         Margin="5"
                         VerticalAlignment="Center"
                         Width="50"/>
-                <TextBlock Text="Unit:"
+                    <TextBlock Text="Unit:"
                             Margin="5"
                             VerticalAlignment="Center"/>
-                <TextBox HorizontalAlignment="Left"
+                    <TextBox HorizontalAlignment="Left"
                         MinWidth="25"
                         Text="{Binding Path=ToAddRecipeIngredient.Unit}"
                         Margin="5"
                         VerticalAlignment="Center"
                         Width="50"/>
 
-                <!--<ComboBox SelectedItem="{Binding Path =Unit }"
-                                        Text="{Binding Path =Unit}"
-                                        IsEditable="True"
-                                        IsTextSearchEnabled="True"
-                                        Background="Transparent"
-                                        BorderBrush="Transparent"
-                                        Margin="5"
-                                        VerticalContentAlignment="Center"
-                                        Width="100"
-                                        >
-                </ComboBox>-->
-                
-                <!--Add New Ingredient Button-->
-                <Button x:Name="AddIngredientToRecipe"
+                    <!--Add New Ingredient Button-->
+                    <Button x:Name="AddIngredientToRecipe"
                     HorizontalAlignment="Left"
                     Content="+"/>
-                
-            </DockPanel>
 
+                </DockPanel>
+                <TextBlock Text="{Binding Path=ToAddIngredientError.ErrorMessage}"                   
+                   HorizontalAlignment="Left"
+                   Foreground="Red"
+                   FontFamily="Segoe UI Light"
+                   FontSize="12"
+                   MaxWidth="400"
+                   TextWrapping="Wrap"
+                   Margin="0,10"
+                   Visibility="{Binding ToAddIngredientError.IsErrorVisible, Converter={StaticResource BooleanToVisibilityConvertor}}"/>
+            </StackPanel>
+
+            <!--#endregion-->
+
+            <!--#endregion-->
             
+            <!--#region Steps Region-->
 
             <!--Steps Section Title-->
             <TextBlock Text="Steps"
@@ -268,6 +278,10 @@
                     HorizontalAlignment="Left"
                     Content="+"/>
 
+            <!--#endregion-->
+            
+            <!--#region Bottom Buttons-->
+
             <!--Action Section-->
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="SaveRecipe"
@@ -276,6 +290,9 @@
                 <Button Content="Clear'n'Exit"
                         Style="{StaticResource ActionButton}"/>
             </StackPanel>
+
+            <!--#endregion-->
+            
         </StackPanel>
     </ScrollViewer>
 </UserControl>

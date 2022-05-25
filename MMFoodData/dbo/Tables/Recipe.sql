@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Recipe]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [Name] NVARCHAR(50) NOT NULL, 
+    Title NVARCHAR(50) NOT NULL, 
     [Description] NVARCHAR(MAX) NULL,
     [PictureUrl] NVARCHAR(MAX) NULL, 
     [CreateDate] DATETIME2 NULL DEFAULT getutcdate(), 

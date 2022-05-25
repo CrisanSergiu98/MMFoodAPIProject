@@ -63,7 +63,7 @@ namespace MMFoodDesktopUI.Helper
         #endregion
 
         #region RecipeIngredient
-        public static RecipeIngredientModel FromIngredientDisplayToModel(RecipeIngredientDisplayModel input)
+        public static RecipeIngredientModel FromRecipeIngredientDisplayToModel(RecipeIngredientDisplayModel input)
         {
             return new RecipeIngredientModel
             {

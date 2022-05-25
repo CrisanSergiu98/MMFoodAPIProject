@@ -50,7 +50,7 @@ namespace MMFoodDesktopUI.Models
         public string DisplayText { 
             get
             {
-                return $"{Quantity} {_unit} {Ingredient.Name}";
+                return $"{Quantity} {_unit} of {Ingredient.Name}";
             }
         }
 

@@ -70,8 +70,7 @@ namespace MMFoodDesktopUI.ViewModels
                     output = true;
                 
                 return output;
-            }
-            
+            }            
         }
 
         /// <summary>

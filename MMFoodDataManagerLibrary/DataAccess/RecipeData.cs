@@ -20,7 +20,7 @@ namespace MMFoodDataManagerLibrary.DataAccess
 
             RecipeDBModel dbRecipe = new RecipeDBModel
             {
-                Name = recipe.Name,
+                Title = recipe.Title,
                 Description = recipe.Description,
                 PictureUrl = recipe.PictureUrl,
                 IPublished = false,
@@ -49,7 +49,7 @@ namespace MMFoodDataManagerLibrary.DataAccess
                     sql.SaveDataInTranzaction("dbo.spRecipe_Insert", dbRecipe);
 
                     //Get the Recipe Id
-                    dbRecipe.Id = sql.LoadDataInTranzaction<int, dynamic>("dbo.spRecipe_Lookup", new { dbRecipe.Name, dbRecipe.UserId }).FirstOrDefault();
+                    dbRecipe.Id = sql.LoadDataInTranzaction<int, dynamic>("dbo.spRecipe_Lookup", new { dbRecipe.Title, dbRecipe.UserId }).FirstOrDefault();
 
                     //Save the Ingredient List
                     foreach (var i in recipeIngredients)
