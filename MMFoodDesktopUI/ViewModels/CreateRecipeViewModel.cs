@@ -52,6 +52,7 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _title = value;
+                TitleError.Initialize();
                 NotifyOfPropertyChange(() => Title);
             }
         }
@@ -61,6 +62,7 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _pictureUrl = value;
+                PictureError.Initialize();
                 NotifyOfPropertyChange(() => PictureUrl);
             }
         }
@@ -70,6 +72,7 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _description = value;
+                DescriptionError.Initialize();
                 NotifyOfPropertyChange(() => Description);
             }
         }
@@ -82,6 +85,7 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _selectedCategory = value;
+                CategoryError.Initialize();
                 NotifyOfPropertyChange(() => SelectedCategory);
                 NotifyOfPropertyChange(() => CategorySearchResult);
             }
@@ -92,6 +96,7 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _recipeIngredients = value;
+                IngredientsError.Initialize();
                 NotifyOfPropertyChange(() => RecipeIngredients);
             }
         }
@@ -101,6 +106,7 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _toAddRecipeIngredient = value;
+                ToAddIngredientError.Initialize();
                 NotifyOfPropertyChange(() => ToAddRecipeIngredient);
             }
         }
@@ -110,6 +116,7 @@ namespace MMFoodDesktopUI.ViewModels
             set
             {
                 _steps = value;
+                StepsError.Initialize();
                 NotifyOfPropertyChange(() => Steps);
             }
         }
@@ -164,6 +171,18 @@ namespace MMFoodDesktopUI.ViewModels
 
         #region ErrorMessages
 
+        private ErrorDisplayModel _toAddIngredientError;
+
+        public ErrorDisplayModel ToAddIngredientError
+        {
+            get { return _toAddIngredientError; }
+            set
+            {
+                _toAddIngredientError = value;
+                NotifyOfPropertyChange(() => ToAddIngredientError);
+            }
+        }
+
         private ErrorDisplayModel _titleError;
 
         public ErrorDisplayModel TitleError
@@ -174,21 +193,67 @@ namespace MMFoodDesktopUI.ViewModels
                 _titleError = value;
                 NotifyOfPropertyChange(() => TitleError);
             }
-        }
+        }        
 
-        private ErrorDisplayModel _toAddIngredientError;
+        private ErrorDisplayModel _descriptionError;
 
-        public ErrorDisplayModel ToAddIngredientError
+        public ErrorDisplayModel DescriptionError
         {
-            get { return _toAddIngredientError; }
+            get { return _descriptionError; }
             set 
-            { 
-                _toAddIngredientError = value;
-                NotifyOfPropertyChange(() => ToAddIngredientError);
+            {
+                _descriptionError = value;
+                NotifyOfPropertyChange(() => DescriptionError);
             }
         }
 
+        private ErrorDisplayModel _pictureError;
 
+        public ErrorDisplayModel PictureError
+        {
+            get { return _pictureError; }
+            set 
+            {
+                _pictureError = value;
+                NotifyOfPropertyChange(() => PictureError);
+            }
+        }
+
+        private ErrorDisplayModel _categoryError;
+
+        public ErrorDisplayModel CategoryError
+        {
+            get { return _categoryError; }
+            set 
+            { 
+                _categoryError = value;
+                NotifyOfPropertyChange(() => CategoryError);
+            }
+        }
+
+        private ErrorDisplayModel _ingredientsError;
+
+        public ErrorDisplayModel IngredientsError
+        {
+            get { return _ingredientsError; }
+            set 
+            {
+                _ingredientsError = value;
+                NotifyOfPropertyChange(() => IngredientsError);
+            }
+        }
+
+        private ErrorDisplayModel _stepsError;
+
+        public ErrorDisplayModel StepsError
+        {
+            get { return _stepsError; }
+            set 
+            { 
+                _stepsError = value;
+                NotifyOfPropertyChange(() => StepsError);
+            }
+        }
 
         #endregion
 
@@ -199,14 +264,28 @@ namespace MMFoodDesktopUI.ViewModels
         public CreateRecipeViewModel(ICategoryEndPoint categoryEndPoint, IRecipeEndPoint recipeEndpoint,
             IIngredientEndPoint ingredientEndPoint, IMapper mapper)
         {
+            #region Dependency Injection
+
             _categoryEndPoint = categoryEndPoint;
             _recipeEndpoint = recipeEndpoint;
             _ingredientEndPoint = ingredientEndPoint;
             _mapper = mapper;
 
-            Title = "Your recipe title...";
-            Description = "Your recipe description...";
-            PictureUrl = "Picture URL...";
+            #endregion
+
+            #region ErrorMessagesInitialization
+
+            _toAddIngredientError = new ErrorDisplayModel();
+            _titleError = new ErrorDisplayModel();
+            _descriptionError = new ErrorDisplayModel();
+            _pictureError = new ErrorDisplayModel();
+            _categoryError = new ErrorDisplayModel();
+            _ingredientsError = new ErrorDisplayModel();
+            _stepsError = new ErrorDisplayModel();
+
+            #endregion
+
+            #region Initialization
 
             RecipeIngredients = new BindingList<RecipeIngredientDisplayModel>();
             SelectedCategory = new CategoryDisplayModel();
@@ -216,13 +295,14 @@ namespace MMFoodDesktopUI.ViewModels
             CategorySearchResult = new BindingList<CategoryDisplayModel>();
             IngredientSearchResult = new BindingList<IngredientDisplayModel>();
             _toAddIngredient = new IngredientDisplayModel();
-            _toAddRecipeIngredient = new RecipeIngredientDisplayModel();            
+            _toAddRecipeIngredient = new RecipeIngredientDisplayModel();
+            Steps = new BindingList<RecipeStepModel>();
 
-            #region ErrorMessagesInitialization
+            #endregion            
 
-            _toAddIngredientError = new ErrorDisplayModel();
-
-            #endregion
+            Title = "Your recipe title...";
+            Description = "Your recipe description...";
+            PictureUrl = "Picture URL...";
 
             SelectedCategory.PropertyChanged += SelectedCategory_PropertyChanged;
             ToAddIngredient.PropertyChanged += ToAddIngredient_PropertyChanged;
@@ -339,13 +419,20 @@ namespace MMFoodDesktopUI.ViewModels
 
         private bool PictureUrlCheck(string url)
         {
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("url");
-            request.Method = "HEAD";
-
             try
             {
-                request.GetResponse();
-                return true;
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+                request.Method = "HEAD";
+
+                try
+                {
+                    request.GetResponse();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
             catch
             {
@@ -356,34 +443,48 @@ namespace MMFoodDesktopUI.ViewModels
         private bool ValidateRecipe()
         {
             bool output = true;
+            TitleError.Initialize();
+            DescriptionError.Initialize();
+            PictureError.Initialize();
+            StepsError.Initialize();
 
             if (Title.Length <= 0)
             {
                 output = false;
+                TitleError.ErrorMessage = "Invalid Title";
             }
                 
 
             if (Description.Length <= 0)
             {
                 output = false;
+                DescriptionError.ErrorMessage = "Invalid Description";
             }
                 
 
-            if (PictureUrl.Length <= 0)
+            if (!PictureUrlCheck(PictureUrl))
             {
                 output = false;
+                PictureError.ErrorMessage = "Invalid Picture";
             }
                 
+            if(SelectedCategory==null || SelectedCategory.Id == 0)
+            {
+                output = false;
+                CategoryError.ErrorMessage = "You must select a valid category";
+            }
 
             if (RecipeIngredients.Count <= 0)
             {
                 output = false;
+                IngredientsError.ErrorMessage = "You need at least one ingredient";
             }
                 
 
-            if (RecipeIngredients.Count <= 0)
+            if (Steps.Count <= 0)
             {
                 output = false;
+                StepsError.ErrorMessage = "You need at least one step";
             }                
 
             return output;

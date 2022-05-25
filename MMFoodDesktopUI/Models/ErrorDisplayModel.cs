@@ -40,5 +40,10 @@ namespace MMFoodDesktopUI.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void Initialize()
+        {
+            ErrorMessage = "";
+        }
     }
 }

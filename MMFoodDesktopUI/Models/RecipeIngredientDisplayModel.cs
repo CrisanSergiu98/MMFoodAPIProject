@@ -25,7 +25,7 @@ namespace MMFoodDesktopUI.Models
                 _ingredient = value;
                 CallPropertyChanged(nameof(Ingredient));
             }
-        }        
+        }
 
         public float Quantity
         {
@@ -47,7 +47,8 @@ namespace MMFoodDesktopUI.Models
             }
         }
 
-        public string DisplayText { 
+        public string DisplayText 
+        {
             get
             {
                 return $"{Quantity} {_unit} of {Ingredient.Name}";
@@ -64,7 +65,6 @@ namespace MMFoodDesktopUI.Models
         private void CallPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }       
-
+        }
     }
 }
