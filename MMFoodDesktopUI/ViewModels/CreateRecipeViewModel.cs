@@ -420,7 +420,7 @@ namespace MMFoodDesktopUI.ViewModels
 
             if (ValidateRecipe())
             {
-                //await _recipeEndpoint.PostRecipe(toSaveRecipe);
+                await _recipeEndpoint.PostRecipe(toSaveRecipe);
             }
         }
 
