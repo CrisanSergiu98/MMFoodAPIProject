@@ -39,6 +39,7 @@ namespace MMFoodDesktopUI.ViewModels
         private RecipeIngredientDisplayModel _selectedIngredient;
         private IngredientDisplayModel _toAddIngredient;
         private RecipeIngredientDisplayModel _toAddRecipeIngredient;
+        private PictureDisplayModel _picture;
 
         #endregion
 
@@ -55,15 +56,14 @@ namespace MMFoodDesktopUI.ViewModels
                 TitleError.Initialize();
                 NotifyOfPropertyChange(() => Title);
             }
-        }
-        public string PictureUrl
+        }        
+        public PictureDisplayModel Picture
         {
-            get { return _pictureUrl; }
-            set
-            {
-                _pictureUrl = value;
-                PictureError.Initialize();
-                NotifyOfPropertyChange(() => PictureUrl);
+            get { return _picture; }
+            set 
+            { 
+                _picture = value;
+                NotifyOfPropertyChange(() => Picture);
             }
         }
         public string Description
@@ -271,7 +271,7 @@ namespace MMFoodDesktopUI.ViewModels
             _ingredientEndPoint = ingredientEndPoint;
             _mapper = mapper;
 
-            #endregion
+            #endregion            
 
             #region ErrorMessagesInitialization
 
@@ -297,15 +297,23 @@ namespace MMFoodDesktopUI.ViewModels
             _toAddIngredient = new IngredientDisplayModel();
             _toAddRecipeIngredient = new RecipeIngredientDisplayModel();
             Steps = new BindingList<RecipeStepModel>();
+            _picture = new PictureDisplayModel();
 
-            #endregion            
+            #endregion
+
+            #region Value Settings
 
             Title = "Your recipe title...";
             Description = "Your recipe description...";
-            PictureUrl = "Picture URL...";
+
+            #endregion
+
+            #region Events Configuration
 
             SelectedCategory.PropertyChanged += SelectedCategory_PropertyChanged;
             ToAddIngredient.PropertyChanged += ToAddIngredient_PropertyChanged;
+
+            #endregion
         }
 
         #endregion
@@ -393,9 +401,12 @@ namespace MMFoodDesktopUI.ViewModels
 
             toSaveRecipe.Title = Title;
             toSaveRecipe.Description = Description;
-            toSaveRecipe.PictureUrl = PictureUrl;
+            toSaveRecipe.PictureUrl = Picture.Url;
 
             toSaveRecipe.Category = ModelConvertor.FromCategoryDisplayToModel(SelectedCategory);
+
+            toSaveRecipe.RecipeIngredients = new List<RecipeIngredientModel>();
+            toSaveRecipe.Steps = new List<RecipeStepModel>();
 
             foreach(var i in RecipeIngredients)
             {
@@ -415,34 +426,12 @@ namespace MMFoodDesktopUI.ViewModels
 
         #endregion
 
-        #region Private Methods
-
-        private bool PictureUrlCheck(string url)
-        {
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-                request.Method = "HEAD";
-
-                try
-                {
-                    request.GetResponse();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        #region Private Methods        
 
         private bool ValidateRecipe()
         {
             bool output = true;
+
             TitleError.Initialize();
             DescriptionError.Initialize();
             PictureError.Initialize();
@@ -462,7 +451,7 @@ namespace MMFoodDesktopUI.ViewModels
             }
                 
 
-            if (!PictureUrlCheck(PictureUrl))
+            if (!Picture.IsUrlValid)
             {
                 output = false;
                 PictureError.ErrorMessage = "Invalid Picture";

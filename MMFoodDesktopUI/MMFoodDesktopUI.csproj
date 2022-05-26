@@ -101,6 +101,7 @@
     <Compile Include="Models\CategoryDisplayModel.cs" />
     <Compile Include="Models\ErrorDisplayModel.cs" />
     <Compile Include="Models\IngredientDisplayModel.cs" />
+    <Compile Include="Models\PictureDisplayModel.cs" />
     <Compile Include="Models\RecipeIngredientDisplayModel.cs" />
     <Compile Include="ViewModels\CreateRecipeViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

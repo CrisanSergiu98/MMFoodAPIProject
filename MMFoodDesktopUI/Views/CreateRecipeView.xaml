@@ -75,6 +75,13 @@
                BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="FontSize" Value="15"/>
         </Style>
+        
+        <!--Combobox Base Style-->
+        <Style x:Key="ComboboxBase"
+               TargetType="ComboBox">
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        
         <!--#endregion-->
     </UserControl.Resources>
     <ScrollViewer>
@@ -85,12 +92,14 @@
             <!--#region TitleAndPicture-->
             <StackPanel Orientation="Horizontal">
                 <!--Picture-->
-                <Image Source="{Binding Path=PictureUrl}"
+                <Image Source="{Binding Path= Picture.DisplayUrl}"
                         HorizontalAlignment="Left"
+                       MaxHeight="100"
+                       MaxWidth="100"
                         />
 
                 <!--Title section-->
-                <TextBox Text="{Binding Path=Title}"
+                <TextBox Text="{Binding Path= Title}"
                         Style="{StaticResource RecipeTytleStyle}"
                         VerticalContentAlignment="Bottom"/>
 
@@ -111,7 +120,7 @@
                 <TextBlock Text="Pic URL:"
                             Margin="0,0,5,0"
                             />
-                <TextBox Text="{Binding Path = PictureUrl}"
+                <TextBox Text="{Binding Path = Picture.Url}"
                             MinWidth="150"
                             MaxWidth="400"/>
             </StackPanel>
@@ -133,14 +142,15 @@
             <StackPanel Orientation="Horizontal">
 
                 <TextBlock Text="Category"
-                            Style="{StaticResource DefaultTitle}"/>
+                            Style="{StaticResource DefaultTitle}"
+                           VerticalAlignment="Center"/>
                 <ComboBox ItemsSource="{Binding Path = CategorySearchResult}"
                           SelectedItem="{Binding Path = SelectedCategory, Mode=TwoWay}"
                           Text="{Binding Path=SelectedCategory.Name, Mode=TwoWay}"
                           DisplayMemberPath="Name"
-                          MinWidth="100"
+                          MinWidth="150"
                           Margin="5"
-                          VerticalAlignment="Bottom"
+                          VerticalAlignment="Center"
                           IsTextSearchEnabled="True"
                           IsEditable="True"
                           />
