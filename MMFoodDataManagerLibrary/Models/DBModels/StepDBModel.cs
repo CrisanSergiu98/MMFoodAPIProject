@@ -10,7 +10,6 @@ namespace MMFoodDataManagerLibrary.Models
     {
         public int RecipeId { get; set; }
         public int Number { get; set; }
-        public string Title { get; set; }
         public string Details { get; set; }
     }
 }

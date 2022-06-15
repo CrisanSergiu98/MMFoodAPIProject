@@ -90,9 +90,9 @@ namespace MMFoodDataManagerLibrary.Internal.DataAccess
 
         public List<T> LoadDataInTranzaction<T, U>(string storedProcedures, U parameters)
         {
-                List<T> rows = _connection.Query<T>(storedProcedures, parameters,
-                    commandType: CommandType.StoredProcedure, transaction: _tranzaction).ToList();
-                return rows;
+            List<T> rows = _connection.Query<T>(storedProcedures, parameters,
+                    commandType: CommandType.StoredProcedure, transaction: _tranzaction).ToList(); 
+            return rows;
         }
 
         public void CommitTranzaction()

@@ -22,7 +22,6 @@ namespace MMFoodDataManagerLibrary.DataAccess
             toSaveRecipeIngredient.RecipeId = recipeId;
             toSaveRecipeIngredient.Quantity = ingredient.Quantity;
             toSaveRecipeIngredient.Unit = ingredient.Unit;
-            toSaveRecipeIngredient.IsRequired = ingredient.IsReqired;
 
             try
             {

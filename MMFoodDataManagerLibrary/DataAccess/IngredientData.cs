@@ -11,9 +11,12 @@ namespace MMFoodDataManagerLibrary.DataAccess
     public class IngredientData
     {
         SQLDataAccess sql;
+        IngredientCategoryData _categoryData;
+
         public IngredientData()
         {
             sql = new SQLDataAccess();
+            _categoryData = new IngredientCategoryData();
         }
         //public IngredientDBModel SaveIngredient(IngredientModel ingredient, string userId)
         //{
@@ -103,12 +106,31 @@ namespace MMFoodDataManagerLibrary.DataAccess
                 throw new Exception();
             }
         }
-        public List<IngredientDBModel> SearchByName(string name)
+        public List<IngredientModel> SearchByName(string name)
         {
-            return sql.LoadData<IngredientDBModel, dynamic>("dbo.spIngredient_SearchByName", new
+            List<IngredientModel> output = new List<IngredientModel>();
+
+            foreach(var i in sql.LoadData<IngredientDBModel, dynamic>("dbo.spIngredient_SearchByName", new
             {
                 Name = name
-            }, "MMFoodData");
+            }, "MMFoodData"))
+            {
+                output.Add(new IngredientModel
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Description = i.Description,
+                    Category =  _categoryData.GetById(i.CategoryId),
+                    PictureUrl = i.PictureUrl
+                });
+            }
+            
+            return output;
+
+            //return sql.LoadData<IngredientDBModel, dynamic>("dbo.spIngredient_SearchByName", new
+            //{
+            //    Name = name
+            //}, "MMFoodData");
         }
     }
 }

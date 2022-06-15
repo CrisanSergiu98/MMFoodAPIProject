@@ -20,5 +20,17 @@ namespace MMFoodDataManager.Controllers
 
             data.SaveRecipe(recipe, userId);
         }
+
+        public RecipeModel Get(string userId)
+        {
+            RecipeModel output = new RecipeModel();
+
+            RecipeData data = new RecipeData();
+            //find the corresponding id
+            //get the recipe using the id
+            //assamble the rest of the model
+            
+            return output;
+        }
     }
 }

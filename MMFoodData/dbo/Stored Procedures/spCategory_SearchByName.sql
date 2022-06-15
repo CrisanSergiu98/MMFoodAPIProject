@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spCategory_SearchByName]
-	@Name nvarchar
+	@Name nvarchar(50)
 AS
 begin
 	set nocount on;

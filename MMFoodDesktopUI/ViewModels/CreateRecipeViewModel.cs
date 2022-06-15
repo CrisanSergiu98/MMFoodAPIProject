@@ -120,6 +120,15 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => Steps);
             }
         }
+        public IngredientDisplayModel ToAddIngredient
+        {
+            get { return _toAddIngredient; }
+            set
+            {
+                _toAddIngredient = value;
+                NotifyOfPropertyChange(() => ToAddIngredient);
+            }
+        }
 
         #endregion
 
@@ -157,15 +166,7 @@ namespace MMFoodDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CategorySearchResult);
             }
         }
-        public IngredientDisplayModel ToAddIngredient
-        {
-            get { return _toAddIngredient; }
-            set
-            {
-                _toAddIngredient = value;
-                NotifyOfPropertyChange(() => ToAddIngredient);
-            }
-        }
+        
 
         #endregion
 
@@ -328,13 +329,7 @@ namespace MMFoodDesktopUI.ViewModels
 
             foreach (var i in searchResult)
             {
-                result.Add(new IngredientDisplayModel
-                {
-                    Id=i.Id,
-                    Name = i.Name,
-                    PictureUrl = i.PictureUrl,
-                    Description = i.Description
-                });
+                result.Add(ModelConvertor.FromIngredientModelToDisplay(i));
             }
 
             IngredientSearchResult = new BindingList<IngredientDisplayModel>(result);
@@ -372,7 +367,7 @@ namespace MMFoodDesktopUI.ViewModels
         {
             if (ValidateIngredient())
             {
-                _toAddRecipeIngredient.Ingredient = _toAddIngredient;
+                ToAddRecipeIngredient.Ingredient = ToAddIngredient;
 
                 RecipeIngredients.Add(_toAddRecipeIngredient);
 
@@ -420,7 +415,14 @@ namespace MMFoodDesktopUI.ViewModels
 
             if (ValidateRecipe())
             {
-                await _recipeEndpoint.PostRecipe(toSaveRecipe);
+                try
+                {
+                    await _recipeEndpoint.PostRecipe(toSaveRecipe);
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -489,6 +491,7 @@ namespace MMFoodDesktopUI.ViewModels
                 output = false;
                 ToAddIngredientError.ErrorMessage = "Unit not specified";
             }
+
 
             if (ToAddRecipeIngredient.Quantity == 0)
             {

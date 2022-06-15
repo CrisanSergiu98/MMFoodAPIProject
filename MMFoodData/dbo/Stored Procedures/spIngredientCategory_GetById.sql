@@ -4,7 +4,7 @@ AS
 begin
 	set nocount on;
 
-	select * 
+	select Id 
 	from dbo.IngredientCategory
 	where Id=@Id
 end

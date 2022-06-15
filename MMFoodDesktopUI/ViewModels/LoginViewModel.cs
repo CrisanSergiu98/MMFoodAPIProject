@@ -13,6 +13,15 @@ namespace MMFoodDesktopUI.ViewModels
 {
     public class LoginViewModel: Screen
     {
+        #region DI
+
+        private IAPIHelper _apiHelper;
+        private IEventAggregator _events;
+
+        #endregion
+
+        #region Binding
+
         //private string _username = "";
         //private string _password;
 
@@ -22,74 +31,63 @@ namespace MMFoodDesktopUI.ViewModels
 
         private string _errorMessage;
 
-        /// <summary>
-        /// Dependency Injection for our apiHelper
-        /// </summary>
-        private IAPIHelper _apiHelper;
-        private IEventAggregator _events;
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                NotifyOfPropertyChange(() => Username);
+                NotifyOfPropertyChange(() => CanLogin);
+            }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                NotifyOfPropertyChange(() => Password);
+                NotifyOfPropertyChange(() => CanLogin);
+            }
+        }
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorVisible);
+            }
+        }
+
+        #endregion
 
         public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {
             _events = events;
             _apiHelper = apiHelper;
         }
-        /// <summary>
-        /// Capture the Username TextBox Text in this fullprop
-        /// </summary>
-        public string Username
-        {
-            get { return _username; }
-            set 
-            {
-                _username = value;
-                NotifyOfPropertyChange(()=> Username );
-                NotifyOfPropertyChange(() => CanLogin);               
-            }
-        }
-        /// <summary>
-        /// Capture the Password PaswordBox Text in this fullprop
-        /// </summary>
-        public string Password
-        {
-            get { return _password; }
-            set 
-            {
-                _password = value;
-                NotifyOfPropertyChange(() => Password);
-                NotifyOfPropertyChange(() => CanLogin);                
-            }
-        }        
+
+        #region Binding Methods
 
         public bool IsErrorVisible
         {
-            get 
+            get
             {
                 bool output = false;
 
                 if (ErrorMessage?.Length > 0)
                     output = true;
-                
-                return output;
-            }            
-        }
 
-        /// <summary>
-        /// Capture the ErrorMessage TextBlock in this fullprop
-        /// </summary>
-        public string ErrorMessage
-        {
-            get { return _errorMessage; }
-            set 
-            {
-                _errorMessage = value;
-                NotifyOfPropertyChange(()=> ErrorMessage);
-                NotifyOfPropertyChange(() => IsErrorVisible);
+                return output;
             }
         }
-        /// <summary>
-        /// A prop to give our NotifyOfPropertyChange(() => CanLogin) so the Login Button activates only if CanLigin is true
-        /// </summary>
-        public bool CanLogin { 
+
+        public bool CanLogin
+        {
             get
             {
                 bool output = false;
@@ -113,10 +111,6 @@ namespace MMFoodDesktopUI.ViewModels
             }
         }
 
-        /// <summary>
-        /// Calls our apiHelper Authenticate Task
-        /// </summary>
-        /// <returns></returns>
         public async Task Login()
         {
             try
@@ -131,8 +125,10 @@ namespace MMFoodDesktopUI.ViewModels
             }
             catch (Exception e)
             {
-                ErrorMessage = e.Message;                
+                ErrorMessage = e.Message;
             }
         }
+
+        #endregion
     }
 }

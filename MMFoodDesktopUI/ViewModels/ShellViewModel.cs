@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MMFoodDesktopUI.ViewModels
 {
-    public class ShellViewModel: Conductor<object>, IHandle<LogOnEvent>
+    public class ShellViewModel: Conductor<object>, IHandle<LogOnEvent>, IHandle<RegisterEvent>
     {        
         private CreateRecipeViewModel _createRecpieVM;
         private IEventAggregator _events;
@@ -32,7 +32,7 @@ namespace MMFoodDesktopUI.ViewModels
             }
         }
 
-        public ShellViewModel(CreateRecipeViewModel createRecipeVM, IEventAggregator events, ILoggedInUserModel user, IAPIHelper apiHelper)
+        public ShellViewModel(CreateRecipeViewModel createRecipeVM, IEventAggregator events, ILoggedInUserModel user, IAPIHelper apiHelper, LoginViewModel loginVM)
         {
             _events = events;
             _createRecpieVM = createRecipeVM;
@@ -45,11 +45,7 @@ namespace MMFoodDesktopUI.ViewModels
 
         }
 
-        public void Handle(LogOnEvent message)
-        {
-            ActivateItem(_createRecpieVM);
-            NotifyOfPropertyChange(() => IsLoggedIn);
-        }
+        
 
         public void ExitApplication()
         {
@@ -63,5 +59,27 @@ namespace MMFoodDesktopUI.ViewModels
             ActivateItem(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
         }
+
+        public void Register()
+        {
+            ActivateItem(IoC.Get<RegisterViewModel>());
+        }
+
+
+        #region Events
+        public void Handle(RegisterEvent message)
+        {
+            ActivateItem(IoC.Get<LoginViewModel>());
+            NotifyOfPropertyChange(() => IsLoggedIn);
+        }
+
+        public void Handle(LogOnEvent message)
+        {
+            ActivateItem(_createRecpieVM);
+            NotifyOfPropertyChange(() => IsLoggedIn);
+        }
+
+        #endregion
+
     }
 }

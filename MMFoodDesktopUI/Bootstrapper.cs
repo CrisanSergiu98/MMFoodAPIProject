@@ -53,7 +53,8 @@ namespace MMFoodDesktopUI
             _container.Instance(_container)
                 .PerRequest<ICategoryEndPoint, CategoryEndPoint>()
                 .PerRequest<IRecipeEndPoint, RecipeEndPoint>()
-                .PerRequest<IIngredientEndPoint, IngredientEndPoint>();
+                .PerRequest<IIngredientEndPoint, IngredientEndPoint>()
+                .PerRequest<IAccountEndPoint, AccountEndPoint>();
 
             
             _container

@@ -1,12 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[spRecipe_Insert]
 	@Id int output,
-	@Title nvarchar,
-	@Description nvarchar,
-	@PictureUrl nvarchar,
+	@Title nvarchar(50),
+	@Description nvarchar(max),
+	@PictureUrl nvarchar(max),
 	@CreateDate datetime2,
 	@CategoryId int,
 	@QuisineId int,	
-	@UserId nvarchar,
+	@UserId nvarchar(128),
 	@IsPublished bit
 AS
 begin

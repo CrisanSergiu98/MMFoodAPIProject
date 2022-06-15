@@ -13,7 +13,7 @@ namespace MMFoodDataManager.Controllers
     [Authorize]
     public class IngredientController : ApiController
     {
-        public List<IngredientDBModel> Get(string name)
+        public List<IngredientModel> Get(string name)
         {
             IngredientData data = new IngredientData();
 

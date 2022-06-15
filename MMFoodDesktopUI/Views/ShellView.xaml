@@ -19,10 +19,13 @@
                 <MenuItem Header="Create Recipe"/>
             </MenuItem>
             
-            <MenuItem Header="User"
-                      Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConvertor}}">
+            <MenuItem Header="User">
                 <MenuItem x:Name="LogOut" 
-                          Header="_Log Out"/>
+                          Header="_Log Out"
+                          Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConvertor}}"/>
+                <MenuItem x:Name="Register"
+                          Header="_Register"
+                          Visibility="{Binding !IsLoggedIn, Converter={StaticResource BooleanToVisibilityConvertor}}"/>
             </MenuItem>
             
         </Menu>

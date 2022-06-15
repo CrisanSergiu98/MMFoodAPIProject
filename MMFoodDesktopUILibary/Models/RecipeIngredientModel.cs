@@ -13,6 +13,5 @@ namespace MMFoodDesktopUILibrary.Models
         public IngredientModel Ingredient { get; set; }
         public float Quantity { get; set; }
         public string Unit { get; set; }
-        public bool IsReqired { get; set; }
     }
 }

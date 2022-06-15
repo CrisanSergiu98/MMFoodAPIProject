@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[spCategory_Insert]	
 	@Id int output,
 	@Name nvarchar(50),
-	@Description nvarchar(50),
-	@PictureUrl nvarchar(128)
+	@Description nvarchar(max),
+	@PictureUrl nvarchar(max)
 AS
 begin
 	set nocount on;

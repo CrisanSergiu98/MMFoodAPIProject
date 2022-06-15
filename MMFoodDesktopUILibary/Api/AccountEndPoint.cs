@@ -1,5 +1,5 @@
-﻿using MMFoodDesktopUILibrary.Api;
-using MMFoodDesktopUILibrary.Models;
+﻿using MMFoodDesktopUILibary.Models;
+using MMFoodDesktopUILibrary.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +9,22 @@ using System.Threading.Tasks;
 
 namespace MMFoodDesktopUILibary.Api
 {
-    public class RecipeEndPoint : IRecipeEndPoint
+    public class AccountEndPoint : IAccountEndPoint
     {
         IAPIHelper _apiHelper;
-        public RecipeEndPoint(IAPIHelper apiHelper)
+
+        public AccountEndPoint(IAPIHelper apiHelper)
         {
             _apiHelper = apiHelper;
         }
 
-        public async Task PostRecipe(RecipeModel recipe)
+        public async Task CreateAccount(RegisterBindingModel newUser)
         {
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsJsonAsync("/api/Recipe", recipe))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsJsonAsync("api/Account/Register", newUser))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    // TODO:
+                    //TODO
                 }
                 else
                 {
@@ -31,8 +32,6 @@ namespace MMFoodDesktopUILibary.Api
                 }
             }
         }
-
-        
 
     }
 }

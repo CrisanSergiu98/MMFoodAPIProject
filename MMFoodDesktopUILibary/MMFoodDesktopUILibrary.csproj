@@ -50,8 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\AccountEndPoint.cs" />
     <Compile Include="Api\APIHelper.cs" />
     <Compile Include="Api\CategoryEndPoint.cs" />
+    <Compile Include="Api\IAccountEndPoint.cs" />
     <Compile Include="Api\IAPIHelper.cs" />
     <Compile Include="Api\ICategoryEndPoint.cs" />
     <Compile Include="Api\IIngredientEndPoint.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Models\RecipeIngredientModel.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\RecipeStepModel.cs" />
+    <Compile Include="Models\RegisterBindingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

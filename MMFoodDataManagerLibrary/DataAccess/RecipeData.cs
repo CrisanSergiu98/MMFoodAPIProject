@@ -23,9 +23,11 @@ namespace MMFoodDataManagerLibrary.DataAccess
                 Title = recipe.Title,
                 Description = recipe.Description,
                 PictureUrl = recipe.PictureUrl,
-                IPublished = false,
+                IsPublished = false,
                 UserId = userId,
-                CategoryId = recipe.Category.Id
+                CategoryId = recipe.Category.Id,
+                CreateDate = DateTime.Now
+                
             };
 
             foreach(var i in recipe.RecipeIngredients)
@@ -49,14 +51,14 @@ namespace MMFoodDataManagerLibrary.DataAccess
                     sql.SaveDataInTranzaction("dbo.spRecipe_Insert", dbRecipe);
 
                     //Get the Recipe Id
-                    dbRecipe.Id = sql.LoadDataInTranzaction<int, dynamic>("dbo.spRecipe_Lookup", new { dbRecipe.Title, dbRecipe.UserId }).FirstOrDefault();
+                    dbRecipe.Id = sql.LoadDataInTranzaction<int, dynamic>("dbo.spRecipe_Lookup", new { Title = dbRecipe.Title, UserId = dbRecipe.UserId }).FirstOrDefault();
 
                     //Save the Ingredient List
                     foreach (var i in recipeIngredients)
                     {
                         i.RecipeId = dbRecipe.Id;
 
-                        sql.SaveDataInTranzaction("dbo.spRecipeIntredient_Insert", i);
+                        sql.SaveDataInTranzaction("dbo.spRecipeIngredient_Insert", i);
                     }
 
                     //Save Setps
@@ -81,5 +83,7 @@ namespace MMFoodDataManagerLibrary.DataAccess
             SQLDataAccess sql = new SQLDataAccess();
             return sql.LoadData<int, dynamic>("dbo.spRecipe_Lookup", new { Title = title, UserId = userId }, "MMFoodData").FirstOrDefault();
         }
+
+        
     }
 }

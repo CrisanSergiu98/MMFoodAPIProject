@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[spIngredient_Insert]	
 	@Id int output,
 	@Name nchar(50),
-	@Description nvarchar(128),
-	@PictureUrl nvarchar(128),		
+	@Description nvarchar(max),
+	@PictureUrl nvarchar(max),		
 	@CategoryId int
 AS
 begin

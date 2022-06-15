@@ -16,6 +16,6 @@ namespace MMFoodDataManagerLibrary.Models
         public string Description { get; set; }
         public string PictureUrl { get; set; }
         public DateTime CreateDate { get; set; }
-        public bool IPublished { get; set; }          
+        public bool IsPublished { get; set; }          
     }
 }
